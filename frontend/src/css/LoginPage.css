@@ -17,99 +17,94 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  background-color: var(--pastel-blue-light);
-  min-height: 100vh; /* Cruciale: assicura che il body occupi tutta l'altezza della viewport */
-  overflow-x: hidden;
-  display: flex; /* Cruciale: abilita Flexbox */
-  flex-direction: column; /* Cruciale: impila gli elementi in colonna */
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--pastel-blue-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
-
 
 /* Nuovo container per raggruppare header e auth-container */
 .main-content-wrapper { /* Questo div deve avvolgere header e auth-container nel tuo JSX */
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1; /* Cruciale: permette al contenuto principale di espandersi */
+    flex-grow: 1;
     width: 100%;
+    /* Rimosso qualsiasi margin o padding che possa spingere troppo in basso il contenuto principale */
 }
 
 .auth-container {
-    background-color: var(--text-light); /* Blocco bianco per il form */
-    padding: 40px;
+    background-color: var(--text-light);
+    padding: 30px; /* Ridotto il padding per un contenitore più compatto */
     border-radius: 16px;
-    box-shadow: 0 8px 30px var(--shadow-medium); /* Ombra più pronunciata */
+    box-shadow: 0 8px 30px var(--shadow-medium);
     width: 100%;
-    max-width: 400px; /* Larghezza massima per il blocco */
+    max-width: 380px; /* Leggermente ridotto la larghezza massima per compattezza */
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Spazio tra gli elementi principali */
+    gap: 20px; /* Ridotto lo spazio tra gli elementi principali */
     animation: fadeInScale 0.5s ease-out;
-    margin: 20px auto; /* Centra orizzontalmente e aggiunge margine verticale */
-    box-sizing: border-box; /* Include padding e border nel width */
+    margin: 0px  auto 20px; /* Ridotto il margine verticale per avvicinare agli altri elementi */
+    box-sizing: border-box;
 }
 
 .footer {
-  width: 100%;
-  padding: 1rem;
-  background-color: var(--pastel-blue-darker);
-  color: white;
-  font-size: 0.85rem;
-  text-align: center;
-  z-index: 1;
-  margin-top: auto; /* Cruciale: spinge il footer in fondo al container flex del body */
-  flex-shrink: 0;
+    width: 100%;
+    padding: 0.8rem; /* Leggermente ridotto il padding del footer */
+    background-color: #cbe6e9;
+    font-size: 0.8rem; /* Leggermente ridotto la dimensione del testo del footer */
+    text-align: center;
+    z-index: 1;
+    margin-top: auto;
+    flex-shrink: 0;
 }
-
-
 
 .footer p {
-    margin: 0.2rem 0;
+    margin: 0.1rem 0; /* Ridotto il margine tra i paragrafi nel footer */
 }
-
 
 .auth-container h2 {
     text-align: center;
-    margin-top: -10px;
-    color: var(--pastel-blue-darker); /* Colore del titolo */
-    margin-bottom: 5px; /* Ridotto il margine sotto il titolo */
-    font-size: 2em; /* Dimensione del titolo */
+    margin-top: -5px; /* Spostato leggermente più su */
+    color: var(--pastel-blue-darker);
+    margin-bottom: 10px; /* Aumentato leggermente per separare dal form, ma non troppo */
+    font-size: 1.8em; /* Leggermente ridotto per essere meno imponente */
     font-weight: 600;
 }
 
 .auth-form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Spazio tra i campi input */
+    gap: 12px; /* Ridotto lo spazio tra i campi input */
 }
 
 .auth-container input[type="email"],
 .auth-container input[type="text"],
-.auth-container input[type="password"] { /* Include tutti i tipi di input */
-    padding: 12px 15px; /* Padding standard per tutti gli input */
-    font-size: 1em;
-    border: 1px solid var(--pastel-blue-medium); /* Bordo pastello */
+.auth-container input[type="password"] {
+    padding: 10px 15px; /* Leggermente ridotto il padding verticale */
+    font-size: 0.95em; /* Leggermente ridotto la dimensione del testo input */
+    border: 1px solid var(--pastel-blue-medium);
     border-radius: 8px;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; /* Assicura che gli input occupino tutta la larghezza */
-    box-sizing: border-box; /* Include padding e border nel width */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .auth-container input:focus {
     border-color: var(--pastel-blue-dark);
-    box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); /* Ombra focus */
+    box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2);
 }
 
-/* Stile per il wrapper della checkbox */
 .show-password-checkbox-wrapper {
-    text-align: left; /* Allinea la checkbox a sinistra */
-    margin-top: -5px; /* Sposta leggermente più vicino al form */
-    margin-bottom: 0px; /* Spazio sotto la checkbox */
-    font-size: 0.9em;
+    text-align: left;
+    margin-top: 0px; /* Allineato meglio */
+    margin-bottom: 5px; /* Aggiunto un piccolo margine sotto la checkbox */
+    font-size: 0.85em; /* Leggermente ridotto */
     color: var(--text-dark);
 }
 
@@ -119,26 +114,27 @@ body {
     cursor: pointer;
 }
 
-/* Stili personalizzati per la checkbox (versione semplificata) */
 .show-password-checkbox-wrapper input[type="checkbox"] {
-    width: 18px; /* Dimensione leggermente più piccola per un look più delicato */
-    height: 18px; /* Dimensione leggermente più piccola */
-    margin-right: 8px; /* Spazio tra checkbox e testo */
+    width: 16px; /* Ulteriore riduzione per un look più compatto */
+    height: 16px;
+    margin-right: 6px; /* Ridotto lo spazio */
     cursor: pointer;
-    accent-color: var(--pastel-blue-dark); /* Colora la checkbox con il tuo colore pastello */
-    border-radius: 4px; /* Angoli leggermente arrotondati */
-    /* Rimosse le proprietà appearance e gli stili del pseudo-elemento */
+    accent-color: var(--pastel-blue-dark);
+    border-radius: 3px; /* Angoli più piccoli */
 }
 
 .auth-button {
-    padding: 12px 20px;
-    background-color: var(--pastel-blue-dark); /* Pulsante principale */
+    margin: 0 auto;
+    width:150px;
+    padding: 10px 18px; /* Leggermente ridotto il padding */
+    background-color: var(--pastel-blue-dark);
     color: var(--text-light);
-    font-size: 1.1em;
+    font-size: 1em; /* Leggermente ridotto */
     font-weight: 600;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    text-align: center;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 4px 10px var(--shadow-light);
 }
@@ -157,15 +153,15 @@ body {
 .error-message {
     color: var(--error-red);
     text-align: center;
-    margin-top: 10px;
-    font-size: 0.9em;
+    margin-top: 8px; /* Leggermente ridotto */
+    font-size: 0.85em; /* Leggermente ridotto */
 }
 
 .toggle-auth-mode {
     text-align: center;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Leggermente ridotto */
     color: var(--text-dark);
-    margin-top: 15px;
+    margin-top: 12px; /* Leggermente ridotto */
 }
 
 .toggle-auth-mode button {
@@ -184,16 +180,45 @@ body {
     text-decoration: underline;
 }
 
-/* Modifica dimensione gif */
 .auth-gif {
-  width: 100px;
-  border-radius: 20px;
-  height: auto;
-  margin: 0 auto 15px auto; /* margine sopra, destra, sotto, sinistra */
-  display: block;           /* necessario per usare margin auto su img */
+    width: 75px; /* Ridotto per essere meno invasivo */
+    border-radius: 15px; /* Leggermente ridotto il border-radius */
+    height: auto;
+    margin: 0 auto 10px auto; /* Ridotto il margine inferiore */
+    display: block;
 }
 
-/* Animazioni */
+
+.hero-header {
+    text-align: center;
+    padding: 1.5rem 1rem; /* Ridotto significativamente il padding verticale */
+    margin-top: 2rem; /* Ridotto il margine superiore per avvicinare tutto */
+    width: 100%;
+}
+
+.city-glow-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.8rem; /* NOTEVOLMENTE RIDOTTO per renderlo meno "grosso" */
+    text-transform: uppercase;
+    letter-spacing: 3px; /* Leggermente ridotto */
+    color: #0277bd;
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #ffffff, /* Ridotto l'effetto glow */
+        1px 1px 4px rgba(0, 0, 0, 0.7); /* Ridotto l'ombra */
+    animation: flicker 2.5s infinite alternate;
+    margin: -20px auto; /* Centrato e rimosso margini aggiuntivi */
+    display: block;
+}
+
+.city-subtitle {
+    font-size: 1.1rem; /* Leggermente ridotto */
+    font-style: italic;
+    color: #333;
+    margin-top: 0.8rem; /* Ridotto il margine superiore */
+    animation: fadeIn 2s ease-out;
+}
+
 @keyframes fadeInScale {
     from {
         opacity: 0;
@@ -205,65 +230,54 @@ body {
     }
 }
 
-/* Media Queries per schermi più piccoli */
-@media (max-width: 500px) {
-    .auth-container {
-        padding: 25px;
-        gap: 15px;
-        margin: 10px auto; /* Centra orizzontalmente anche su schermi piccoli */
-    }
-    .auth-container h2 {
-        font-size: 1.8em;
-    }
-    .auth-container input,
-    .auth-button {
-        padding: 10px 12px;
-        font-size: 1em;
-    }
-}
-
-/* Importa il nuovo font: Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
-
-
-.hero-header {
-  text-align: center;
-  padding: 3rem 1rem;
-  margin-top: 4rem; /* Mantieni un po' di spazio sopra il titolo */
-  width: 100%;
-}
-
-.city-glow-title {
-  font-family: 'Poppins', sans-serif; /* Cambiato da Orbitron a Poppins */
-  font-size: 4.2rem;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: #c576e4; /* 🌸 Rosa neon, ma visibile ovunque */
-  text-shadow:
-    0 0 5px #000000,
-    0 0 15px #000000,
-    2px 2px 6px rgba(0, 0, 0, 0.7);
-  animation: flicker 2.5s infinite alternate;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
-.city-subtitle {
-  font-size: 1.3rem;
-  font-style: italic;
-  color: #333;
-  margin-top: 1.2rem;
-  animation: fadeIn 2s ease-out;
-}
-
 @keyframes flicker {
-  0%   { opacity: 1; text-shadow: 0 0 8px #ff4081; }
-  50%  { opacity: 0.85; text-shadow: 0 0 14px #ff4081; }
-  100% { opacity: 1; text-shadow: 0 0 22px #ff4081; }
+    0%   { opacity: 1; text-shadow: 0 0 6px #ffffff; } /* Modificato per un flicker meno intenso */
+    50%  { opacity: 0.88; text-shadow: 0 0 10px #ffffff; }
+    100% { opacity: 1; text-shadow: 0 0 16px #ffffff; }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Media Queries per schermi più piccoli */
+@media (max-width: 500px) {
+    .hero-header {
+        padding: 1rem 0.5rem; /* Ulteriore riduzione per mobile */
+        margin-top: 1.5rem; /* Margine più piccolo per mobile */
+    }
+    .city-glow-title {
+        font-size: 2.2rem; /* Adattato per schermi piccoli */
+        letter-spacing: 2px;
+    }
+    .city-subtitle {
+        font-size: 0.95rem; /* Adattato per schermi piccoli */
+        margin-top: 0.6rem;
+    }
+    .auth-container {
+        padding: 20px; /* Ulteriore riduzione del padding */
+        gap: 12px;
+        margin: 10px auto;
+    }
+    .auth-container h2 {
+        font-size: 1.6em; /* Ulteriore riduzione del titolo del form */
+        margin-bottom: 8px;
+    }
+    .auth-container input,
+    .auth-button {
+        padding: 9px 10px; /* Ulteriore riduzione del padding */
+        font-size: 0.9em;
+    }
+    .auth-gif {
+        width: 70px; /* Ridotto per mobile */
+        margin-bottom: 8px;
+    }
+    .show-password-checkbox-wrapper {
+        font-size: 0.8em;
+    }
+    .toggle-auth-mode {
+        font-size: 0.8em;
+        margin-top: 10px;
+    }
 }
