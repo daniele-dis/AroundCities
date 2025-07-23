@@ -1,0 +1,159 @@
+/* src/css/LoginPage.css */
+
+/* Variabili per la palette colori pastello */
+:root {
+    --pastel-blue-light: #e0f7fa;
+    --pastel-blue-medium: #b3e5fc;
+    --pastel-blue-dark: #0288d1;
+    --pastel-blue-darker: #0277bd;
+    --pastel-green: #c8e6c9;
+    --pastel-pink: #f8bbd0;
+    --pastel-yellow: #fff9c4;
+    --text-dark: #37474f; /* Quasi nero, ma più morbido */
+    --text-light: #ffffff;
+    --error-red: #ef5350;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--pastel-blue-light); /* Sfondo azzurro pastello */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Usa min-height per adattarsi al contenuto */
+    overflow: auto; /* Permette lo scroll se il contenuto è troppo grande */
+}
+
+.auth-container {
+    background-color: var(--text-light); /* Blocco bianco per il form */
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px var(--shadow-medium); /* Ombra più pronunciata */
+    width: 100%;
+    max-width: 400px; /* Larghezza massima per il blocco */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Spazio tra gli elementi principali */
+    animation: fadeInScale 0.5s ease-out;
+    margin: 20px; /* Aggiunge un po' di margine sui lati per schermi piccoli */
+    box-sizing: border-box; /* Include padding e border nel width */
+}
+
+.auth-container h2 {
+    text-align: center;
+    color: var(--pastel-blue-darker); /* Colore del titolo */
+    margin-bottom: 5px; /* Ridotto il margine sotto il titolo */
+    font-size: 2em; /* Dimensione del titolo */
+    font-weight: 600;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spazio tra i campi input */
+}
+
+.auth-container input[type="email"],
+.auth-container input[type="password"],
+.auth-container input[type="text"] {
+    padding: 12px 15px;
+    font-size: 1em;
+    border: 1px solid var(--pastel-blue-medium); /* Bordo pastello */
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Assicura che gli input occupino tutta la larghezza */
+    box-sizing: border-box; /* Include padding e border nel width */
+}
+
+.auth-container input:focus {
+    border-color: var(--pastel-blue-dark);
+    box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); /* Ombra focus */
+}
+
+.auth-button {
+    padding: 12px 20px;
+    background-color: var(--pastel-blue-dark); /* Pulsante principale */
+    color: var(--text-light);
+    font-size: 1.1em;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+.auth-button:hover {
+    background-color: var(--pastel-blue-darker);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--shadow-medium);
+}
+
+.auth-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.error-message {
+    color: var(--error-red);
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.toggle-auth-mode {
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--text-dark);
+    margin-top: 15px;
+}
+
+.toggle-auth-mode button {
+    background: none;
+    border: none;
+    color: var(--pastel-blue-dark);
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.toggle-auth-mode button:hover {
+    color: var(--pastel-blue-darker);
+    text-decoration: underline;
+}
+
+/* Animazioni */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Media Queries per schermi più piccoli */
+@media (max-width: 500px) {
+    .auth-container {
+        padding: 25px;
+        gap: 15px;
+        margin: 10px;
+    }
+    .auth-container h2 {
+        font-size: 1.8em;
+    }
+    .auth-container input,
+    .auth-button {
+        padding: 10px 12px;
+        font-size: 1em;
+    }
+}
