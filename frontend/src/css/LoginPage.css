@@ -58,9 +58,9 @@ body {
 }
 
 .auth-container input[type="email"],
-.auth-container input[type="password"],
-.auth-container input[type="text"] {
-    padding: 12px 15px;
+.auth-container input[type="text"],
+.auth-container input[type="password"] { /* Include tutti i tipi di input */
+    padding: 12px 15px; /* Padding standard per tutti gli input */
     font-size: 1em;
     border: 1px solid var(--pastel-blue-medium); /* Bordo pastello */
     border-radius: 8px;
@@ -73,6 +73,32 @@ body {
 .auth-container input:focus {
     border-color: var(--pastel-blue-dark);
     box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.2); /* Ombra focus */
+}
+
+/* Stile per il wrapper della checkbox */
+.show-password-checkbox-wrapper {
+    text-align: left; /* Allinea la checkbox a sinistra */
+    margin-top: -5px; /* Sposta leggermente più vicino al form */
+    margin-bottom: 0px; /* Spazio sotto la checkbox */
+    font-size: 0.9em;
+    color: var(--text-dark);
+}
+
+.show-password-checkbox-wrapper label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Stili personalizzati per la checkbox (versione semplificata) */
+.show-password-checkbox-wrapper input[type="checkbox"] {
+    width: 18px; /* Dimensione leggermente più piccola per un look più delicato */
+    height: 18px; /* Dimensione leggermente più piccola */
+    margin-right: 8px; /* Spazio tra checkbox e testo */
+    cursor: pointer;
+    accent-color: var(--pastel-blue-dark); /* Colora la checkbox con il tuo colore pastello */
+    border-radius: 4px; /* Angoli leggermente arrotondati */
+    /* Rimosse le proprietà appearance e gli stili del pseudo-elemento */
 }
 
 .auth-button {
