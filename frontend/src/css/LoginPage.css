@@ -17,15 +17,24 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--pastel-blue-light); /* Sfondo azzurro pastello */
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--pastel-blue-light);
+  min-height: 100vh; /* Cruciale: assicura che il body occupi tutta l'altezza della viewport */
+  overflow-x: hidden;
+  display: flex; /* Cruciale: abilita Flexbox */
+  flex-direction: column; /* Cruciale: impila gli elementi in colonna */
+}
+
+
+/* Nuovo container per raggruppare header e auth-container */
+.main-content-wrapper { /* Questo div deve avvolgere header e auth-container nel tuo JSX */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh; /* Usa min-height per adattarsi al contenuto */
-    overflow: auto; /* Permette lo scroll se il contenuto è troppo grande */
+    flex-grow: 1; /* Cruciale: permette al contenuto principale di espandersi */
+    width: 100%;
 }
 
 .auth-container {
@@ -39,12 +48,32 @@ body {
     flex-direction: column;
     gap: 25px; /* Spazio tra gli elementi principali */
     animation: fadeInScale 0.5s ease-out;
-    margin: 20px; /* Aggiunge un po' di margine sui lati per schermi piccoli */
+    margin: 20px auto; /* Centra orizzontalmente e aggiunge margine verticale */
     box-sizing: border-box; /* Include padding e border nel width */
 }
 
+.footer {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--pastel-blue-darker);
+  color: white;
+  font-size: 0.85rem;
+  text-align: center;
+  z-index: 1;
+  margin-top: auto; /* Cruciale: spinge il footer in fondo al container flex del body */
+  flex-shrink: 0;
+}
+
+
+
+.footer p {
+    margin: 0.2rem 0;
+}
+
+
 .auth-container h2 {
     text-align: center;
+    margin-top: -10px;
     color: var(--pastel-blue-darker); /* Colore del titolo */
     margin-bottom: 5px; /* Ridotto il margine sotto il titolo */
     font-size: 2em; /* Dimensione del titolo */
@@ -155,6 +184,15 @@ body {
     text-decoration: underline;
 }
 
+/* Modifica dimensione gif */
+.auth-gif {
+  width: 100px;
+  border-radius: 20px;
+  height: auto;
+  margin: 0 auto 15px auto; /* margine sopra, destra, sotto, sinistra */
+  display: block;           /* necessario per usare margin auto su img */
+}
+
 /* Animazioni */
 @keyframes fadeInScale {
     from {
@@ -172,7 +210,7 @@ body {
     .auth-container {
         padding: 25px;
         gap: 15px;
-        margin: 10px;
+        margin: 10px auto; /* Centra orizzontalmente anche su schermi piccoli */
     }
     .auth-container h2 {
         font-size: 1.8em;
@@ -182,4 +220,50 @@ body {
         padding: 10px 12px;
         font-size: 1em;
     }
+}
+
+/* Importa il nuovo font: Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+
+.hero-header {
+  text-align: center;
+  padding: 3rem 1rem;
+  margin-top: 4rem; /* Mantieni un po' di spazio sopra il titolo */
+  width: 100%;
+}
+
+.city-glow-title {
+  font-family: 'Poppins', sans-serif; /* Cambiato da Orbitron a Poppins */
+  font-size: 4.2rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #c576e4; /* 🌸 Rosa neon, ma visibile ovunque */
+  text-shadow:
+    0 0 5px #000000,
+    0 0 15px #000000,
+    2px 2px 6px rgba(0, 0, 0, 0.7);
+  animation: flicker 2.5s infinite alternate;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.city-subtitle {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #333;
+  margin-top: 1.2rem;
+  animation: fadeIn 2s ease-out;
+}
+
+@keyframes flicker {
+  0%   { opacity: 1; text-shadow: 0 0 8px #ff4081; }
+  50%  { opacity: 0.85; text-shadow: 0 0 14px #ff4081; }
+  100% { opacity: 1; text-shadow: 0 0 22px #ff4081; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
