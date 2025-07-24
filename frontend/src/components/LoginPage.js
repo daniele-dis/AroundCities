@@ -4,6 +4,7 @@ import React, { useState } from "react";
 // import axios from "axios"; 
 import '../css/LoginPage.css'; // Importa il CSS dedicato
 
+
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -74,6 +75,8 @@ export default function LoginPage({ onLogin }) {
     
   return (
     <>
+
+      <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
       {/* 🟡 Inizio del nuovo wrapper per il contenuto principale */}
       <div className="main-content-wrapper">
         <header className="hero-header">

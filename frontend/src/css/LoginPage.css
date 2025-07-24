@@ -1,5 +1,6 @@
 /* src/css/LoginPage.css */
 
+
 /* Variabili per la palette colori pastello */
 :root {
     --pastel-blue-light: #e0f7fa;
@@ -55,7 +56,7 @@ body {
 .footer {
     width: 100%;
     padding: 0.8rem; /* Leggermente ridotto il padding del footer */
-    background-color: #cbe6e9;
+    background-color: #fbf9f08a;
     font-size: 0.8rem; /* Leggermente ridotto la dimensione del testo del footer */
     text-align: center;
     z-index: 1;
@@ -197,9 +198,9 @@ body {
 }
 
 .city-glow-title {
-    font-family: 'Poppins', sans-serif;
+    margin-top: -40px;
+    font-family: "DM Serif Text", serif;
     font-size: 2.8rem; /* NOTEVOLMENTE RIDOTTO per renderlo meno "grosso" */
-    text-transform: uppercase;
     letter-spacing: 3px; /* Leggermente ridotto */
     color: #0277bd;
     text-shadow:
@@ -207,7 +208,7 @@ body {
         0 0 10px #ffffff, /* Ridotto l'effetto glow */
         1px 1px 4px rgba(0, 0, 0, 0.7); /* Ridotto l'ombra */
     animation: flicker 2.5s infinite alternate;
-    margin: -20px auto; /* Centrato e rimosso margini aggiuntivi */
+    margin: -20 px auto; /* Centrato e rimosso margini aggiuntivi */
     display: block;
 }
 
@@ -215,8 +216,21 @@ body {
     font-size: 1.1rem; /* Leggermente ridotto */
     font-style: italic;
     color: #333;
-    margin-top: 0.8rem; /* Ridotto il margine superiore */
+    margin-top: -2rem; /* Ridotto il margine superiore */
     animation: fadeIn 2s ease-out;
+}
+
+.map-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;         /* Mette l'immagine dietro agli altri elementi */
+  filter: blur(8px);   /* Sfocatura, puoi cambiare il valore */
+  opacity: 0.7;        /* Opzionale: rende la mappa meno invadente */
+  pointer-events: none;/* Così non blocca i click sugli elementi sopra */
 }
 
 @keyframes fadeInScale {
