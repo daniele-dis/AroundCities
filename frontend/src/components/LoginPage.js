@@ -1,83 +1,113 @@
 // src/components/LoginPage.jsx
 import React, { useState } from "react";
-// axios non è più necessario per la simulazione con fetch
-// import axios from "axios"; 
-import '../css/LoginPage.css'; // Importa il CSS dedicato
-
+import { useNavigate } from "react-router-dom";
+import '../css/LoginPage.css';
 
 export default function LoginPage({ onLogin }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState(""); // Nuovo stato per il nome utente
-  const [confirmPassword, setConfirmPassword] = useState(""); // Nuovo stato per conferma password
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Nuovo stato per il caricamento
-  const [isRegistering, setIsRegistering] = useState(false); // Stato per alternare login/registrazione
-  const [showPassword, setShowPassword] = useState(false); // Nuovo stato per la visibilità della password
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(""); // Resetta l'errore ad ogni tentativo
-    setLoading(true); // Imposta lo stato di caricamento
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setConfirmPassword("");
+    setError("");
+  };
 
-    try {
-      if (isRegistering) {
-        // Logica di registrazione simulata
-        if (password !== confirmPassword) {
-          setError("Le password non corrispondono.");
-          setLoading(false);
-          return;
-        }
-        // Simulazione chiamata API di registrazione
-        // In una vera applicazione, useresti fetch o axios per chiamare il tuo backend
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simula latenza di rete
-        
-        // Esempio di risposta simulata
-        const simulatedResponse = {
-          success: true,
-          user: { id: 'user-' + Date.now(), username: username, email: email }
-        };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-        if (simulatedResponse.success) {
-          onLogin(simulatedResponse.user);
-        } else {
-          setError("Errore durante la registrazione. Riprova o cambia email/username.");
-        }
-      } else {
-        // Logica di login simulata
-        // Simulazione chiamata API di login
-        // In una vera applicazione, useresti fetch o axios per chiamare il tuo backend
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simula latenza di rete
+    try {
+      if (isRegistering) {
+        // Logica di registrazione
+        if (password !== confirmPassword) {
+          setError("Le password non corrispondono.");
+          setLoading(false);
+          return;
+        }
 
-        // Esempio di risposta simulata
-        const simulatedResponse = {
-          success: true,
-          user: { id: 'user-' + Date.now(), username: 'UtenteSimulato', email: email }
-        };
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        const simulatedResponse = {
+          success: true,
+          user: { id: 'user-' + Date.now(), username: username, email: email }
+        };
 
-        if (simulatedResponse.success) {
-          onLogin(simulatedResponse.user);
-        } else {
-          setError("Credenziali non valide.");
-        }
-      }
-    } catch (err) {
-      console.error("Errore di rete o API simulata:", err);
-      setError("Si è verificato un errore. Riprova più tardi.");
-    } finally {
-      setLoading(false); // Disattiva lo stato di caricamento
-    }
-  };
+        if (simulatedResponse.success) {
+          setIsRegistering(false);
+          resetForm();
+          setError("");
+        } else {
+          setError("Errore durante la registrazione. Riprova o cambia email/username.");
+        }
+      } else {
+        // Logica di login
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-    
-  return (
-    <>
+        const simulatedResponse = {
+          success: true,
+          user: { id: 'user-' + Date.now(), username: 'UtenteSimulato', email: email }
+        };
 
-      <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
-      {/* 🟡 Inizio del nuovo wrapper per il contenuto principale */}
+        if (simulatedResponse.success) {
+          onLogin(simulatedResponse.user);
+          navigate('/map'); // Reindirizza alla mappa dopo il login
+        } else {
+          setError("Credenziali non valide.");
+        }
+      }
+    } catch (err) {
+      console.error("Errore di rete o API simulata:", err);
+      setError("Si è verificato un errore. Riprova più tardi.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <>
+      <div style={{ position: 'relative' }}>
+        <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
+        <button
+          className="info-button"
+          onClick={() => setShowInfo(true)}
+        >
+          <img
+            src={require('../img/info.png')}
+            alt="Info"
+            style={{ width: '30px', height: '30px', display: 'block' }}
+          />
+        </button>
+      </div>
+
+      {showInfo && (
+        <div className="info-modal-overlay" onClick={() => setShowInfo(false)}>
+          <div className="info-modal" onClick={e => e.stopPropagation()}>
+            <h3>Come funziona Around Cities?</h3>
+            <p>
+              Around Cities ti permette di scoprire, condividere e vivere le storie delle città.<br />
+              Registrati, accedi e inizia a esplorare le mappe, aggiungere i tuoi luoghi preferiti e interagire con altri utenti!
+            </p>
+            <button className="auth-button" onClick={() => setShowInfo(false)}>Chiudi</button>
+          </div>
+        </div>
+      )}
+
       <div className="main-content-wrapper">
         <header className="hero-header">
           <h1 className="city-glow-title">Around Cities</h1>
@@ -125,13 +155,12 @@ export default function LoginPage({ onLogin }) {
               />
             )}
 
-            <div className="show-password-checkbox-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="show-password-checkbox-wrapper">
               <input
                 type="checkbox"
                 id="showPasswordCheckbox"
                 checked={showPassword}
                 onChange={togglePasswordVisibility}
-                style={{ marginRight: '5px' }}
               />
               <span>Show Password</span>
             </div>
@@ -147,14 +176,28 @@ export default function LoginPage({ onLogin }) {
             {isRegistering ? (
               <>
                 Hai già un account?{" "}
-                <button type="button" onClick={() => setIsRegistering(false)} disabled={loading}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsRegistering(false);
+                    resetForm();
+                  }}
+                  disabled={loading}
+                >
                   Accedi
                 </button>
               </>
             ) : (
               <>
                 Non hai un account?{" "}
-                <button type="button" onClick={() => setIsRegistering(true)} disabled={loading}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsRegistering(true);
+                    resetForm();
+                  }}
+                  disabled={loading}
+                >
                   Registrati
                 </button>
               </>
@@ -162,9 +205,7 @@ export default function LoginPage({ onLogin }) {
           </div>
         </div>
       </div>
-      {/* 🟡 Fine del nuovo wrapper per il contenuto principale */}
 
-      {/* ✅ Footer spostato all’esterno del main-content-wrapper ma ancora nel componente */}
       <footer className="footer">
         <p>&copy; {new Date().getFullYear()} Around Cities. Tutti i diritti riservati.</p>
         <p>Sviluppato da Daniele Di Sarno & Ciro La Rocca</p>

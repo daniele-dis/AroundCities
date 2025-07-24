@@ -1,7 +1,8 @@
+// App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
-//import Dashboard from "./components/Dashboard";
+import MapPage from "./components/MapPage"; // Importa la MapPage
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -10,11 +11,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage onLogin={setUser} />} />
-   {/*   <Route
-          path="/dashboard"
-          element={user ? <Dashboard user={user} /> : <Navigate to="/login" replace />}
-        /> */}
-        <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} replace />} /> 
+        <Route path="/map" element={user ? <MapPage /> : <Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to={user ? "/map" : "/login"} replace />} /> 
       </Routes> 
     </Router>
   );

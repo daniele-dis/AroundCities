@@ -53,6 +53,50 @@ body {
     box-sizing: border-box;
 }
 
+.info-button {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(250, 246, 227, 0.966);
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.info-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.info-modal {
+  background: #fff;
+  padding: 28px 22px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  max-width: 350px;
+  text-align: center;
+}
+.info-modal h3 {
+  margin-top: 0;
+  color: var(--pastel-blue-dark);
+}
+.info-modal p {
+  margin: 18px 0;
+  color: var(--text-dark);
+  font-size: 1em;
+}
+
 .footer {
     width: 100%;
     padding: 0.8rem; /* Leggermente ridotto il padding del footer */
@@ -232,7 +276,6 @@ body {
   opacity: 0.7;        /* Opzionale: rende la mappa meno invadente */
   pointer-events: none;/* Così non blocca i click sugli elementi sopra */
 }
-
 @keyframes fadeInScale {
     from {
         opacity: 0;
@@ -254,6 +297,8 @@ body {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+
 
 /* Media Queries per schermi più piccoli */
 @media (max-width: 500px) {
