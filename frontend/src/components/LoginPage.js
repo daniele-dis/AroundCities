@@ -6,14 +6,14 @@ import '../css/LoginPage.css';
 export default function LoginPage({ onLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(""); // Useremo questo solo per la registrazione nel frontend
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const [successMessage, setSuccessMessage] = useState(""); // <-- NUOVO STATO PER MESSAGGI DI SUCCESSO
+    const [successMessage, setSuccessMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [showInfo, setShowInfo] = useState(false);
+    const [showInfo, setShowInfo] = useState(false); // Mantengo gli stati originali
     const navigate = useNavigate();
 
     const resetForm = () => {
@@ -22,84 +22,84 @@ export default function LoginPage({ onLogin }) {
         setUsername("");
         setConfirmPassword("");
         setError("");
-        setSuccessMessage(""); // <-- RESETTA ANCHE IL MESSAGGIO DI SUCCESSO
+        setSuccessMessage("");
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");          // <-- PULISCI ENTRAMBI I MESSAGGI ALL'INIZIO
-        setSuccessMessage(""); // <-- PULISCI ENTRAMBI I MESSAGGI ALL'INIZIO
+        setError("");
+        setSuccessMessage("");
         setLoading(true);
 
         try {
             if (isRegistering) {
-                // Logica di registrazione
+                // Logica di registrazione: ora invia al backend Node.js
                 if (password !== confirmPassword) {
                     setError("Le password non corrispondono.");
                     setLoading(false);
                     return;
                 }
-                if (!username || !email || !password) {
-                    setError("Per favore, compila tutti i campi per la registrazione.");
-                    setLoading(false);
-                    return;
-                }
-
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-
-                const emailExists = existingUsers.some(user => user.email === email);
-                const usernameExists = existingUsers.some(user => user.username === username);
-
-                if (emailExists) {
-                    setError("Questa email è già registrata.");
-                    setLoading(false);
-                    return;
-                }
-                if (usernameExists) {
-                    setError("Questo nome utente è già in uso.");
-                    setLoading(false);
-                    return;
-                }
-
-                const newUser = {
-                    id: 'user-' + Date.now(),
-                    username: username,
-                    email: email,
-                    password: password
-                };
-
-                existingUsers.push(newUser);
-                localStorage.setItem('users', JSON.stringify(existingUsers));
-
-                setIsRegistering(false); // Torna alla modalità login
-                resetForm(); // Pulisci il form (che include il reset di error e successMessage)
-                setSuccessMessage("Registrazione avvenuta con successo! Ora puoi accedere."); // <-- IMPOSTA IL MESSAGGIO DI SUCCESSO QUI
-            } else {
-                // Logica di login
+                // Il tuo backend richiede solo email e password per la registrazione.
+                // Il campo username nel form è presente, ma non viene inviato al backend.
+                // Se vuoi salvare l'username, devi modificare server.js e la tabella 'users'.
                 if (!email || !password) {
-                    setError("Per favore, inserisci email e password.");
+                    setError("Per favore, inserisci sia l'email che la password.");
                     setLoading(false);
                     return;
                 }
 
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                const response = await fetch('http://localhost:5000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }), // Inviamo solo email e password al backend
+                });
 
-                const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-                const foundUser = existingUsers.find(user => user.email === email);
+                const data = await response.json(); // Il backend risponde con JSON
 
-                if (foundUser && foundUser.password === password) {
-                    localStorage.setItem('loggedInUser', foundUser.username);
-                    onLogin(foundUser);
-                    navigate('/map');
+                if (response.ok) {
+                    setSuccessMessage(data.message || "Registrazione avvenuta con successo! Ora puoi accedere.");
+                    setIsRegistering(false); // Torna alla modalità login
+                    resetForm(); // Pulisci il form
                 } else {
-                    setError("Credenziali non valide. Controlla email e password.");
+                    setError(data.message || "Errore durante la registrazione. Riprova.");
+                }
+
+            } else {
+                // Logica di login: ora invia al backend Node.js
+                if (!email || !password) {
+                    setError("Per favor, inserisci email e password.");
+                    setLoading(false);
+                    return;
+                }
+                
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json(); // Il backend risponde con JSON
+
+                if (response.ok) {
+                    // Login avvenuto con successo, salva userId e userEmail nel localStorage
+                    // per mantenere lo stato di autenticazione nel frontend.
+                    localStorage.setItem('userId', data.userId);
+                    localStorage.setItem('userEmail', data.email); // Assicurati che il backend restituisca l'email nel login
+                    
+                    setSuccessMessage(data.message || "Accesso avvenuto con successo!");
+                    onLogin(data.userId, data.email); // Chiamiamo la prop onLogin per aggiornare lo stato di autenticazione nell'App.js
+                    navigate('/map'); // Reindirizza l'utente alla pagina della mappa
+                } else {
+                    setError(data.message || "Credenziali non valide. Controlla email e password.");
                 }
             }
         } catch (err) {
-            console.error("Errore di rete o API simulata:", err);
-            setError("Si è verificato un errore. Riprova più tardi.");
+            console.error("Errore di rete o server non raggiungibile:", err);
+            setError("Impossibile connettersi al server. Assicurati che il backend sia attivo.");
         } finally {
             setLoading(false);
         }
@@ -197,7 +197,7 @@ export default function LoginPage({ onLogin }) {
 
 
                         {error && <p className="error-message">{error}</p>}
-                        {successMessage && <p className="success-message">{successMessage}</p>} {/* <-- Questa è la riga chiave */}
+                        {successMessage && <p className="success-message">{successMessage}</p>}
 
                         <button type="submit" className="auth-button" disabled={loading}>
                             {loading ? (isRegistering ? "Registrando..." : "Accedendo...") : (isRegistering ? "Registrati" : "Accedi")}
