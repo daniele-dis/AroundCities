@@ -9,6 +9,7 @@ export default function LoginPage({ onLogin }) {
     const [username, setUsername] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [successMessage, setSuccessMessage] = useState(""); // <-- NUOVO STATO PER MESSAGGI DI SUCCESSO
     const [loading, setLoading] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -21,11 +22,13 @@ export default function LoginPage({ onLogin }) {
         setUsername("");
         setConfirmPassword("");
         setError("");
+        setSuccessMessage(""); // <-- RESETTA ANCHE IL MESSAGGIO DI SUCCESSO
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
+        setError("");          // <-- PULISCI ENTRAMBI I MESSAGGI ALL'INIZIO
+        setSuccessMessage(""); // <-- PULISCI ENTRAMBI I MESSAGGI ALL'INIZIO
         setLoading(true);
 
         try {
@@ -36,18 +39,16 @@ export default function LoginPage({ onLogin }) {
                     setLoading(false);
                     return;
                 }
-                if (!username || !email || !password) { // Aggiungi controlli per tutti i campi
+                if (!username || !email || !password) {
                     setError("Per favore, compila tutti i campi per la registrazione.");
                     setLoading(false);
                     return;
                 }
 
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Simula ritardo API
+                await new Promise(resolve => setTimeout(resolve, 1500));
 
-                // Recupera gli utenti esistenti dal localStorage o inizializza un array vuoto
                 const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-                // Controlla se l'email o l'username sono già registrati
                 const emailExists = existingUsers.some(user => user.email === email);
                 const usernameExists = existingUsers.some(user => user.username === username);
 
@@ -62,40 +63,36 @@ export default function LoginPage({ onLogin }) {
                     return;
                 }
 
-                // Simula una registrazione di successo
                 const newUser = {
                     id: 'user-' + Date.now(),
                     username: username,
                     email: email,
-                    password: password // In un'app reale, useresti hashing della password!
+                    password: password
                 };
 
                 existingUsers.push(newUser);
-                localStorage.setItem('users', JSON.stringify(existingUsers)); // Salva gli utenti aggiornati
+                localStorage.setItem('users', JSON.stringify(existingUsers));
 
-                setIsRegistering(false); // Torna alla modalità login dopo la registrazione
-                resetForm(); // Pulisci il form
-                setError("Registrazione avvenuta con successo! Ora puoi accedere."); // Messaggio di successo
+                setIsRegistering(false); // Torna alla modalità login
+                resetForm(); // Pulisci il form (che include il reset di error e successMessage)
+                setSuccessMessage("Registrazione avvenuta con successo! Ora puoi accedere."); // <-- IMPOSTA IL MESSAGGIO DI SUCCESSO QUI
             } else {
-                // Logica di login (quando isRegistering è false)
+                // Logica di login
                 if (!email || !password) {
                     setError("Per favore, inserisci email e password.");
                     setLoading(false);
                     return;
                 }
 
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Simula ritardo API
+                await new Promise(resolve => setTimeout(resolve, 1500));
 
                 const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-
-                // Cerca l'utente per email
                 const foundUser = existingUsers.find(user => user.email === email);
 
-                if (foundUser && foundUser.password === password) { // Verifica credenziali
-                    // Login di successo
-                    localStorage.setItem('loggedInUser', foundUser.username); // Salva l'username dell'utente trovato
-                    onLogin(foundUser); // Passa l'oggetto utente al prop onLogin se lo usi
-                    navigate('/map'); // Reindirizza alla mappa dopo il login
+                if (foundUser && foundUser.password === password) {
+                    localStorage.setItem('loggedInUser', foundUser.username);
+                    onLogin(foundUser);
+                    navigate('/map');
                 } else {
                     setError("Credenziali non valide. Controlla email e password.");
                 }
@@ -150,7 +147,7 @@ export default function LoginPage({ onLogin }) {
                 <div className="auth-container">
                     <h2>{isRegistering ? "Registrati" : "Accedi"}</h2>
                     <img
-                        src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmdoZHE2bGUydzFqZWJiaHRoajl0NWgxdGVuc2tkbmdtOGVvbmNzbiZlcD1wMV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BRie5xjBZcHhj06NfL/giphy.gif"
+                        src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmdoZHE2bGUydzFqZWJiaHRoajl0NWgxdGVuc2tkbmdtOGVvbmNzbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BRie5xjBZcHhj06NfL/giphy.gif"
                         alt="Auth Animation"
                         className="auth-gif"
                     />
@@ -198,7 +195,9 @@ export default function LoginPage({ onLogin }) {
                             <span>Mostra Password</span>
                         </div>
 
+
                         {error && <p className="error-message">{error}</p>}
+                        {successMessage && <p className="success-message">{successMessage}</p>} {/* <-- Questa è la riga chiave */}
 
                         <button type="submit" className="auth-button" disabled={loading}>
                             {loading ? (isRegistering ? "Registrando..." : "Accedendo...") : (isRegistering ? "Registrati" : "Accedi")}
