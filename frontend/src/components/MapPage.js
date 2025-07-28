@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react"; // <-- AGGIUNGI 'useEffect' QUI
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css'; // Non dimenticare di importare il CSS di Leaflet
-import '../css/MapPage.css'; // Il tuo file CSS personalizzato
-
+import 'leaflet/dist/leaflet.css';
+import '../css/MapPage.css';
 
 const worldContinentsGeoJSON = {
     "type": "FeatureCollection",
     "features": [
-
         {
             "type": "Feature",
             "properties": { "name": "Europe", "id": "europe" },
@@ -68,139 +66,93 @@ const worldContinentsGeoJSON = {
                     [140, -10], [150, -20], [160, -30], [130, -40], [140, -10]
                 ]]
             }
-        },
+        }
     ]
 };
 
-
-// Colori più tenui per le regioni, per un aspetto meno "giocattoloso"
 const regions = [
-    { id: 'europe', name: 'Europa', emoji: '🇪🇺', color: '#6A994E' }, // Verde oliva
-    { id: 'south-america', name: 'Sud America', emoji: '🌎', color: '#C15543' }, // Rosso mattone
-    { id: 'north-america', name: 'Nord America', emoji: '🇺🇸', color: '#4F6D7A' }, // Blu-grigio
-    { id: 'asia', name: 'Asia', emoji: '🌏', color: '#8C5252' }, // Marrone rossiccio
-    { id: 'africa', name: 'Africa', emoji: '🌍', color: '#B08E3B' }, // Giallo ocra
-    { id: 'oceania', name: 'Oceania', emoji: '🇦🇺', color: '#5C7C7B' } // Verde acqua scuro
+    { id: 'europe', name: 'Europa', emoji: '🇪🇺', color: '#6A994E' },
+    { id: 'south-america', name: 'Sud America', emoji: '🌎', color: '#C15543' },
+    { id: 'north-america', name: 'Nord America', emoji: '🇺🇸', color: '#4F6D7A' },
+    { id: 'asia', name: 'Asia', emoji: '🌏', color: '#8C5252' },
+    { id: 'africa', name: 'Africa', emoji: '🌍', color: '#B08E3B' },
+    { id: 'oceania', name: 'Oceania', emoji: '🇦🇺', color: '#5C7C7B' }
 ];
 
 export default function MapPage() {
     const [selectedRegion, setSelectedRegion] = useState(null);
-    const [loggedInUser, setLoggedInUser] = useState(''); // <-- AGGIUNGI QUESTO STATO
+    const [loggedInUser, setLoggedInUser] = useState('');
     const navigate = useNavigate();
 
-    // <-- AGGIUNGI QUESTO useEffect
     useEffect(() => {
         const user = localStorage.getItem('loggedInUser');
         if (user) {
             setLoggedInUser(user);
         }
-        // else {
-        //     // Opzionale: reindirizza al login se l'utente non è loggato
-        //     navigate('/login'); 
-        // }
     }, []);
-    // --> FINE AGGIUNTA useEffect
 
     const handleRegionClick = (regionId) => {
         setSelectedRegion(regionId);
-        console.log(`Selected region: ${regionId}`);
-        // Puoi aggiungere qui una logica per centrare la mappa sulla regione selezionata
-        // o per ingrandire su di essa se necessario. Richiederebbe l'uso di 'useMap' hook di react-leaflet.
     };
 
     const handleCityClick = (city) => {
         navigate(`/city/${city.id}`);
     };
 
-    // Stile per i livelli GeoJSON (continenti)
-    const getFeatureStyle = (feature) => {
-        // Assicurati che `feature.properties.id` corrisponda agli ID delle tue regioni.
-        // Se il tuo GeoJSON reale usa un'altra proprietà (es. 'continent'), dovrai adattare qui.
-        const region = regions.find(r => r.id === feature.properties.id);
+    const getFeatureStyle = () => {
         return {
-            fillColor: region ? region.color : '#ccc', // Usa il colore della regione o un default
-            weight: 2, // Spessore del bordo
-            opacity: 1, // Opacità del bordo
-            color: 'white', // Colore del bordo
-            dashArray: '3', // Linea tratteggiata per il bordo
-            fillOpacity: selectedRegion === feature.properties.id ? 0.9 : 0.7, // Opacità di riempimento
+            fillColor: 'transparent',
+            weight: 0,
+            opacity: 0,
+            color: 'transparent',
+            fillOpacity: 0
         };
     };
 
-    // Funzione per gestire le interazioni con le feature GeoJSON (mouseover, click, mouseout)
     const onEachFeature = (feature, layer) => {
-        const regionId = feature.properties.id; // L'ID del continente dal GeoJSON
+        const regionId = feature.properties.id;
         
-        // Assicurati che il feature sia una delle regioni che ti interessano
-        if (!regions.some(r => r.id === regionId)) {
-            // Se il tuo GeoJSON contiene features che non sono continenti o che non vuoi interattive,
-            // puoi ignorarle qui.
-            return; 
-        }
-
         layer.on({
-            click: () => handleRegionClick(regionId),
-            mouseover: (e) => {
-                const layer = e.target;
-                layer.setStyle({
-                    weight: 5, // Bordo più spesso all'hover
-                    color: '#666', // Colore del bordo all'hover
-                    dashArray: '', // Bordo solido all'hover
-                    fillOpacity: 0.9 // Opacità di riempimento maggiore all'hover
-                });
-                layer.bringToFront(); // Porta il poligono in primo piano all'hover
-            },
-            mouseout: (e) => {
-                e.target.setStyle(getFeatureStyle(feature)); // Ripristina lo stile originale
-            }
+            click: () => handleRegionClick(regionId)
         });
     };
 
     return (
         <div className="map-page-container">
-
             <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
             
             <header className="map-header">
-                {/* <-- MODIFICA QUESTA RIGA */}
                 <h1 className="city-glow-title-map">
-                    Benvenuto{loggedInUser ? `, ${loggedInUser}` : ''}! 
+                    Benvenuto{loggedInUser ? `, ${loggedInUser}` : ''}!
                 </h1>
                 <p className="city-subtitle">Esplora le storie del mondo</p>
             </header>
 
-        <footer className="footer">
-            <p>&copy; {new Date().getFullYear()} Around Cities. Tutti i diritti riservati.</p>
-            <p>Sviluppato da Daniele Di Sarno & Ciro La Rocca</p>
-        </footer>
+            <footer className="footer">
+                <p>&copy; {new Date().getFullYear()} Around Cities. Tutti i diritti riservati.</p>
+                <p>Sviluppato da Daniele Di Sarno & Ciro La Rocca</p>
+            </footer>
 
             <div className="map-interactive-container">
                 <div className="world-map">
                     <MapContainer 
-                        center={[20, 0]} // Centro della mappa [latitudine, longitudine]
-                        zoom={2}         // Livello di zoom iniziale
-                        minZoom={2}      // Livello di zoom minimo
-                        maxBounds={[[-90, -180], [90, 180]]} // Limita il panning
-                        maxBoundsViscosity={1.0} // Impedisce di fare il panning fuori dai limiti
-                        style={{ height: "100%", width: "100%" }} // Assicura che la mappa riempia il div
-                        zoomControl={false} // Disabilita il controllo zoom di default
-                        attributionControl={false} // Disabilita l'attribuzione Leaflet
+                        center={[20, 0]}
+                        zoom={2}
+                        minZoom={2}
+                        maxBounds={[[-90, -180], [90, 180]]}
+                        maxBoundsViscosity={1.0}
+                        style={{ height: "100%", width: "100%" }}
+                        zoomControl={false}
+                        attributionControl={false}
                     >
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            // Puoi scegliere altri fornitori di tile, ad esempio per un look più artistico:
-                            // "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
-                            // "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-                            // Vedi: https://leaflet-extras.github.io/leaflet-providers/preview/
                         />
-                        {/* Renderizza i dati GeoJSON per i continenti */}
-                        {worldContinentsGeoJSON && (
-                            <GeoJSON
-                                data={worldContinentsGeoJSON}
-                                style={getFeatureStyle}
-                                onEachFeature={onEachFeature}
-                            />
-                        )}
+                        <GeoJSON
+                            data={worldContinentsGeoJSON}
+                            style={getFeatureStyle}
+                            onEachFeature={onEachFeature}
+                        />
                     </MapContainer>
                 </div>
 
@@ -210,7 +162,7 @@ export default function MapPage() {
                             key={region.id}
                             className={`region-button ${selectedRegion === region.id ? 'active' : ''}`}
                             onClick={() => handleRegionClick(region.id)}
-                            style={{ backgroundColor: region.color }} // Il colore di sfondo del pulsante
+                            style={{ backgroundColor: region.color }}
                         >
                             <span className="region-emoji">{region.emoji}</span>
                             <span className="region-name">{region.name}</span>
@@ -237,11 +189,8 @@ export default function MapPage() {
             )}
         </div>
     );
-
-
 }
 
-// Funzione helper per ottenere le città per regione (lasciata invariata)
 function getCitiesForRegion(regionId) {
     const cities = {
         europe: [
@@ -273,10 +222,7 @@ function getCitiesForRegion(regionId) {
             { id: 'sydney', name: 'Sydney' },
             { id: 'auckland', name: 'Auckland' },
             { id: 'melbourne', name: 'Melbourne' }
-        ],
+        ]
     };
-
-
     return cities[regionId] || [];
-
 }
