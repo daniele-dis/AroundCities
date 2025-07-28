@@ -169,6 +169,11 @@ export default function MapPage() {
                 <p className="city-subtitle">Esplora le storie del mondo</p>
             </header>
 
+        <footer className="footer">
+            <p>&copy; {new Date().getFullYear()} Around Cities. Tutti i diritti riservati.</p>
+            <p>Sviluppato da Daniele Di Sarno & Ciro La Rocca</p>
+        </footer>
+
             <div className="map-interactive-container">
                 <div className="world-map">
                     <MapContainer 
@@ -232,6 +237,8 @@ export default function MapPage() {
             )}
         </div>
     );
+
+
 }
 
 // Funzione helper per ottenere le città per regione (lasciata invariata)
@@ -269,5 +276,7 @@ function getCitiesForRegion(regionId) {
         ],
     };
 
+
     return cities[regionId] || [];
+
 }

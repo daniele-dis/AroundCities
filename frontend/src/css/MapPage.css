@@ -47,6 +47,18 @@ body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07); /* Ombra più delicata */
 }
 
+.footer {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #fbf9f08a;
+    font-size: 0.8rem;
+    text-align: center;
+    position: fixed; /* Aggiunto */
+    bottom: 0; /* Aggiunto */
+    left: 0; /* Aggiunto */
+    z-index: 100; /* Aumentato per essere sopra altri elementi */
+}
+
 .city-glow-title-map {
     font-family: "DM Serif Text", serif;
     margin-top: -20px;
