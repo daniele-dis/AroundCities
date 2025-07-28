@@ -371,7 +371,10 @@ body {
 /* Stili per schermi desktop standard (es. 1920px di larghezza) */
 @media (min-width: 2000px) {
      .auth-container {
-        margin: 5vh auto; /* Margine verticale proporzionale */
+        max-width: 500px;
+        padding: 50px;
+        gap:30px;
+        margin: 8vh auto; /* Margine verticale proporzionale */
     }
 
 
@@ -399,7 +402,7 @@ body {
     }
 
     .auth-container h2 {
-        font-size: 2.2em;
+        font-size: 2.3em;
     }
 
     .auth-container input {
@@ -408,13 +411,13 @@ body {
     }
 
     .auth-button {
-        width: 180px;
-        padding: 12px 20px;
-        font-size: 1.1em;
+        width: 210px;    /* Aumentato da 180px */
+        padding: 15px 24px; /* Leggermente più grande */
+        font-size: 1.15em;
     }
 
     .auth-gif {
-        width: 90px;
+        width: 95px;
     }
 
     .show-password-checkbox-wrapper,
@@ -434,6 +437,9 @@ body {
     }
     
    .auth-container {
+        max-width: 550px; /* Aumentato da 500px */
+        padding: 55px;
+        gap: 35px;
         margin: 8vh auto;
     }
 
@@ -455,6 +461,7 @@ body {
 
     .auth-button {
         width: 200px;
+        padding: 14px 20px;
         font-size: 1.2em;
     }
 
