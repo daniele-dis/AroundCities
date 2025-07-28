@@ -59,22 +59,39 @@ body {
     z-index: 100; /* Aumentato per essere sopra altri elementi */
 }
 
+.welcome-box {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 24px 32px;
+    margin: 20px auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    width: 600px;
+    height: 75px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+
 .city-glow-title-map {
     font-family: "DM Serif Text", serif;
-    margin-top: -20px;
-    font-size: 2.8em; 
+    font-size: 2.8em;
     color: #0277bd;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Ombra titolo ridotta */
-    margin-bottom: 0x; 
-    letter-spacing: 0.5px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 20px;
 }
 
 .city-subtitle {
-    font-size: 1.1em; /* Sottotitolo ridotto */
+    font-size: 1.1em;
     color: #5d748d;
     font-weight: 400;
-    margin-top: -40px; /* Spazio sopra il sottotitolo ridotto */
+    text-align: center;
+    margin-bottom: 30px;
 }
+
 
 /* Contenitore Interattivo Mappa + Sidebar */
 .map-interactive-container {

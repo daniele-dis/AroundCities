@@ -143,87 +143,98 @@ export default function MapPage() {
         });
     };
 
-    return (
-        <div className="map-page-container">
-            {/* ... (header e footer rimangono identici) ... */}
-            
-            <div className="map-interactive-container">
-                <div className="world-map">
-                    <MapContainer 
-                        center={[20, 0]}
-                        zoom={2}
-                        minZoom={2}
-                        maxBounds={[[-90, -180], [90, 180]]}
-                        maxBoundsViscosity={1.0}
-                        style={{ height: "100%", width: "100%" }}
-                        zoomControl={false}
-                        attributionControl={false}
-                    >
-                        <TileLayer
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <GeoJSON
-                            data={worldContinentsGeoJSON}
-                            style={getFeatureStyle}
-                            onEachFeature={onEachFeature}
-                        />
-                    </MapContainer>
-                </div>
+   return (
+    <div className="map-page-container">
+        
+    <div className="welcome-box">
+        <div className="city-glow-title-map">
+            Benvenuto{loggedInUser?.endsWith('a') ? 'a' : ''}, {loggedInUser}
+        </div>
+        <div className="city-subtitle">
+            Seleziona una regione dal mondo per iniziare a esplorare.
+        </div>
+    </div>
 
-                <div className="regions-sidebar">
-                    {Object.values(CONTINENTS).map(region => (
-                        <button
-                            key={region.id}
-                            className={`region-button ${selectedRegion === region.id ? 'active' : ''}`}
-                            onClick={() => handleRegionClick(region.id)}
-                            style={{ backgroundColor: region.color }}
-                        >
-                            <span className="region-emoji">{region.emoji}</span>
-                            <span className="region-name">{region.name}</span>
-                        </button>
-                    ))}
-                </div>
+        {/* Contenuto interattivo della mappa */}
+        <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
+        <div className="map-interactive-container">
+            <div className="world-map">
+                <MapContainer 
+                    center={[20, 0]}
+                    zoom={2}
+                    minZoom={2}
+                    maxBounds={[[-90, -180], [90, 180]]}
+                    maxBoundsViscosity={1.0}
+                    style={{ height: "100%", width: "100%" }}
+                    zoomControl={false}
+                    attributionControl={false}
+                >
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <GeoJSON
+                        data={worldContinentsGeoJSON}
+                        style={getFeatureStyle}
+                        onEachFeature={onEachFeature}
+                    />
+                </MapContainer>
             </div>
 
-            {selectedRegion && (
-                <div className="region-details">
-                    <div className="region-header">
-                        <h3>{CONTINENTS[selectedRegion.toUpperCase().replace('-', '_')]?.name || selectedRegion}</h3>
-                        <input
-                            type="text"
-                            placeholder="Cerca città..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="search-input"
-                        />
-                    </div>
-                    
-                    {filteredCities.length > 0 ? (
-                        <div className="cities-grid">
-                            {filteredCities.map((city, index) => (
-                                <div
-                                    key={`${city.name}-${index}`}
-                                    className="city-card"
-                                    onClick={() => handleCityClick(city)}
-                                >
-                                    <h4>{city.name}</h4>
-                                    <div className="city-info">
-                                        <span className="country-code">{city.country}</span>
-                                        <div className="coordinates">
-                                            <span>Lat: {Number(city.lat).toFixed(4)}</span>
-                                            <span>Lng: {Number(city.lng).toFixed(4)}</span>
-                                        </div>
+            <div className="regions-sidebar">
+                {Object.values(CONTINENTS).map(region => (
+                    <button
+                        key={region.id}
+                        className={`region-button ${selectedRegion === region.id ? 'active' : ''}`}
+                        onClick={() => handleRegionClick(region.id)}
+                        style={{ backgroundColor: region.color }}
+                    >
+                        <span className="region-emoji">{region.emoji}</span>
+                        <span className="region-name">{region.name}</span>
+                    </button>
+                ))}
+            </div>
+        </div>
+
+        {selectedRegion && (
+            <div className="region-details">
+                <div className="region-header">
+                    <h3>{CONTINENTS[selectedRegion.toUpperCase().replace('-', '_')]?.name || selectedRegion}</h3>
+                    <input
+                        type="text"
+                        placeholder="Cerca città..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="search-input"
+                    />
+                </div>
+                
+                {filteredCities.length > 0 ? (
+                    <div className="cities-grid">
+                        {filteredCities.map((city, index) => (
+                            <div
+                                key={`${city.name}-${index}`}
+                                className="city-card"
+                                onClick={() => handleCityClick(city)}
+                            >
+                                <h4>{city.name}</h4>
+                                <div className="city-info">
+                                    <span className="country-code">{city.country}</span>
+                                    <div className="coordinates">
+                                        <span>Lat: {Number(city.lat).toFixed(4)}</span>
+                                        <span>Lng: {Number(city.lng).toFixed(4)}</span>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="no-results">
-                            {searchTerm ? 'Nessun risultato trovato' : 'Caricamento città...'}
-                        </p>
-                    )}
-                </div>
-            )}
-        </div>
-    );
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="no-results">
+                        {searchTerm ? 'Nessun risultato trovato' : 'Caricamento città...'}
+                    </p>
+                )}
+            </div>
+        )}
+    </div>
+);
+
 }
