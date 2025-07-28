@@ -35,6 +35,7 @@ body {
     align-items: center;
     flex-grow: 1;
     width: 100%;
+    padding-bottom: 20px;
     /* Rimosso qualsiasi margin o padding che possa spingere troppo in basso il contenuto principale */
 }
 
@@ -99,15 +100,15 @@ body {
 
 .footer {
     width: 100%;
-    padding: 0.8rem; /* Leggermente ridotto il padding del footer */
+    padding: 0.8rem;
     background-color: #fbf9f08a;
-    font-size: 0.8rem; /* Leggermente ridotto la dimensione del testo del footer */
+    font-size: 0.8rem;
     text-align: center;
-    z-index: 1;
-    margin-top: auto;
-    flex-shrink: 0;
+    position: fixed; /* Aggiunto */
+    bottom: 0; /* Aggiunto */
+    left: 0; /* Aggiunto */
+    z-index: 100; /* Aumentato per essere sopra altri elementi */
 }
-
 .footer p {
     margin: 0.1rem 0; /* Ridotto il margine tra i paragrafi nel footer */
 }
@@ -364,5 +365,100 @@ body {
     .toggle-auth-mode {
         font-size: 0.8em;
         margin-top: 10px;
+    }
+}
+
+/* Stili per schermi desktop standard (es. 1920px di larghezza) */
+@media (min-width: 2000px) {
+     .auth-container {
+        margin: 5vh auto; /* Margine verticale proporzionale */
+    }
+
+
+    .footer{
+        padding: 0.6rem;
+        font-size: 0.7rem;
+    }
+
+   .main-content-wrapper {
+        justify-content: center; /* Centra verticalmente il contenuto */
+        padding-top: 5vh; /* Spazio superiore aggiustabile */
+        padding-bottom: 5vh; /* Spazio inferiore aggiustabile */
+    }
+
+     .hero-header {
+        margin-top: 0; /* Rimuove il margine superiore fisso */
+        padding-top: 0; /* Allinea meglio con il container */
+    }
+     .city-glow-title {
+        margin-top: 0; /* Corregge lo spazio negativo */
+    }
+
+    .city-subtitle {
+        font-size: 1.3rem;
+    }
+
+    .auth-container h2 {
+        font-size: 2.2em;
+    }
+
+    .auth-container input {
+        padding: 12px 18px;
+        font-size: 1.1em;
+    }
+
+    .auth-button {
+        width: 180px;
+        padding: 12px 20px;
+        font-size: 1.1em;
+    }
+
+    .auth-gif {
+        width: 90px;
+    }
+
+    .show-password-checkbox-wrapper,
+    .toggle-auth-mode,
+    .error-message,
+    .success-message {
+        font-size: 0.95em;
+    }
+}
+
+/* Stili specifici per schermi molto grandi (es. 2560px di larghezza) */
+@media (min-width: 3000px) {
+
+      .main-content-wrapper {
+        padding-top: 10vh;
+        padding-bottom: 10vh;
+    }
+    
+   .auth-container {
+        margin: 8vh auto;
+    }
+
+    .city-glow-title {
+        font-size: 4rem;
+    }
+
+    .city-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .auth-container h2 {
+        font-size: 2.5em;
+    }
+
+    .auth-container input {
+        font-size: 1.2em;
+    }
+
+    .auth-button {
+        width: 200px;
+        font-size: 1.2em;
+    }
+
+    .auth-gif {
+        width: 100px;
     }
 }
