@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import '../css/MapPage.css';
+import '../css/LoginPage.css';
 import citiesData from '../data/cities.json';
 import worldContinentsGeoJSON from '../data/continents.json'; // Questo è il tuo file continents.json
 
@@ -338,9 +339,9 @@ export default function MapPage() {
                     Benvenuto{loggedInUser?.endsWith('a') ? 'a' : ''}, {loggedInUser}
                 </div>
                 <div className="city-subtitle">
-                    {currentView === 'continents' && 'Seleziona una regione dal mondo per iniziare a esplorare.'}
-                    {currentView === 'countries' && `Esplora i paesi in ${getContinentConfigById(selectedRegion)?.name || 'questa regione'}.`}
-                    {currentView === 'cities' && `Esplora le città in ${COUNTRY_NAMES[selectedCountry] || 'questo paese'}.`}
+                    Seleziona una regione dal mondo per iniziare a esplorare.
+      { /*              {currentView === 'countries' && `Esplora i paesi in ${getContinentConfigById(selectedRegion)?.name || 'questa regione'}.`}
+                    {currentView === 'cities' && `Esplora le città in ${COUNTRY_NAMES[selectedCountry] || 'questo paese'}.`} */}
                 </div>
             </div>
 
@@ -394,15 +395,15 @@ export default function MapPage() {
                                 <h3>{getContinentConfigById(selectedRegion)?.name || selectedRegion} Paesi</h3>
                                 <input
                                     type="text"
-                                    placeholder="Cerca paese..."
+                                    placeholder="Cerca Paese..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="search-input"
+                                    className="country-search-input"
                                 />
                                 <button
                                     className="clear-selection-button"
                                     onClick={() => handleRegionClick(selectedRegion)}> {/* Cliccare lo stesso continente per tornare indietro */}
-                                    Annulla Selezione Continente
+                                    <strong>Annulla Selezione</strong>
                                 </button>
                             </>
                         )}
@@ -472,6 +473,9 @@ export default function MapPage() {
 
                 </div>
             )}
+
         </div>
+        
     );
+    
 }

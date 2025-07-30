@@ -92,7 +92,7 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-top: -5px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .city-subtitle {
@@ -120,6 +120,10 @@ body {
     padding: 10px; /* Padding interno mappa ridotto */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Ombra meno pronunciata */
     overflow: hidden;
+}
+
+.region-header{
+    margin-bottom: 10px;;
 }
 
 /* Sidebar delle Regioni */
@@ -203,8 +207,8 @@ body {
 
 /* Stili per la card del paese */
 .country-card {
-    background-color: var(--color-background-secondary); /* Sfondo della card */
-    border: 1px solid var(--color-border-primary);
+    background-color: #e0f2f7; 
+    border: 1px solid #b3e5fc; 
     border-radius: 8px;
     padding: 15px;
     text-align: center;
@@ -220,7 +224,8 @@ body {
 .country-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 10px var(--color-shadow-primary);
-    background-color: var(--color-highlight-secondary); /* Colore al passaggio del mouse */
+
+    background-color:  rgba(2, 119, 189, 0.6);
     color: white; /* Testo bianco all'hover */
 }
 
@@ -240,6 +245,54 @@ body {
     font-size: 0.8em;
     color: var(--color-text-secondary); /* Colore del codice paese */
     transition: color 0.2s ease-in-out;
+}
+
+/* --- Contenitore per Input e Bottone --- */
+.search-controls {
+  display: flex; /* Abilita Flexbox */
+  gap: 15px; /* Spazio tra gli elementi */
+  margin-bottom: 20px; /* Spazio sotto il gruppo di elementi */
+  align-items: center; /* Allinea verticalmente al centro */
+}
+
+/* --- Stile per il Campo di Input --- */
+.country-search-input {
+  flex-grow: 1; /* Permette all'input di occupare lo spazio disponibile */
+  padding: 10px 15px;
+  height: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  min-width: 0; /* Permette all'input di restringersi in piccoli schermi */
+}
+
+.country-search-input:focus {
+  border-color: #039be5; /* Bordo blu al focus */
+  box-shadow: 0 0 0 3px rgba(3, 155, 229, 0.2); /* Ombra esterna blu al focus */
+  outline: none; /* Rimuove il contorno predefinito del browser */
+}
+
+/* --- Stile per il Bottone "Annulla Selezione Continente" --- */
+.clear-selection-button {
+  background-color: #fbf9f0;
+  color: black;
+  height: 35px;
+  font-size: 500px;
+  margin-left: 15px;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Impedisce al testo del bottone di andare a capo */
+}
+
+/* Effetto hover per il bottone */
+.clear-selection-button:hover {
+  background-color: #0277bd; /* Blu più scuro all'hover */
 }
 
 

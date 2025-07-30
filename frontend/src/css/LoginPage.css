@@ -50,7 +50,8 @@ body {
     flex-direction: column;
     gap: 20px; /* Ridotto lo spazio tra gli elementi principali */
     animation: fadeInScale 0.5s ease-out;
-    margin: 0px  auto 20px; /* Ridotto il margine verticale per avvicinare agli altri elementi */
+/*    margin: 0px  auto 20px; /* Ridotto il margine verticale per avvicinare agli altri elementi */
+    margin-top: -20px;
     box-sizing: border-box;
 }
 
@@ -245,7 +246,7 @@ body {
 }
 
 .city-glow-title {
-    margin-top: -40px;
+    margin-top: -50px;
     font-family: "DM Serif Text", serif;
     font-size: 2.8rem; /* NOTEVOLMENTE RIDOTTO per renderlo meno "grosso" */
     letter-spacing: 3px; /* Leggermente ridotto */
@@ -263,7 +264,7 @@ body {
     font-size: 1.1rem; /* Leggermente ridotto */
     font-style: italic;
     color: #333;
-    margin-top: -2rem; /* Ridotto il margine superiore */
+    margin-top: -2.5rem; /* Ridotto il margine superiore */
     animation: fadeIn 2s ease-out;
 }
 
