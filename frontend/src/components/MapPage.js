@@ -17,7 +17,7 @@ L.Icon.Default.mergeOptions({
 });
 
 // Mappatura completa da codice paese a nome paese
-const COUNTRY_NAMES = {
+export const COUNTRY_NAMES = {
     // Europa
     'AD': 'Andorra', 'AL': 'Albania', 'AT': 'Austria', 'BE': 'Belgio', 'BA': 'Bosnia ed Erzegovina',
     'BG': 'Bulgaria', 'HR': 'Croazia', 'CY': 'Cipro', 'CZ': 'Repubblica Ceca', 'DK': 'Danimarca',
@@ -239,20 +239,23 @@ export default function MapPage() {
         }
     };
 
+// ... (tutto il codice precedente rimane invariato) ...
+
     const handleCountryClick = (countryCode) => {
-        console.log(`Country clicked: ${countryCode}, currentView: ${currentView}`);
-        // Se clicco sullo stesso paese e sono già nella vista città, torno alla vista paesi
-        if (selectedCountry === countryCode && currentView === 'cities') {
-            setSelectedCountry(null);
-            setCurrentView('countries');
-            setSearchTerm('');
+        console.log(`Country clicked: ${countryCode}`);
+
+        // Se il paese cliccato è l'Italia, naviga a una nuova pagina per le città italiane.
+        if (countryCode === 'IT') {
+            navigate(`/cities/${countryCode}`);
         } else {
-            // Altrimenti, vado alla vista città per il paese selezionato
+            // Altrimenti, continua con la logica esistente di mostrare le città nel pannello laterale
             setSelectedCountry(countryCode);
             setCurrentView('cities');
-            setSearchTerm(''); // Resetta il termine di ricerca
+            setSearchTerm('');
         }
     };
+
+// ... (il resto del tuo componente rimane invariato) ...
 
     const handleCityClick = (city) => {
         console.log(`City clicked: ${city.name}`);
