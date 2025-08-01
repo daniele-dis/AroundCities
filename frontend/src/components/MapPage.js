@@ -395,7 +395,7 @@ export default function MapPage() {
                     <div className="region-header">
                         {currentView === 'countries' && (
                             <>
-                                <h3>{getContinentConfigById(selectedRegion)?.name || selectedRegion} Paesi</h3>
+                                <h3>Paesi {getContinentConfigById(selectedRegion)?.name || selectedRegion} </h3>
                                 <input
                                     type="text"
                                     placeholder="Cerca Paese..."
@@ -403,10 +403,17 @@ export default function MapPage() {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="country-search-input"
                                 />
+                                {/* Pulsante per Resettare il testo nel form di input*/}
+                                <button
+                                    className="clear-country-button"
+                                    onClick={() => setSearchTerm('')}> 
+                                    <strong>Reset Ricerca Paese</strong>
+                                </button>
+
                                 <button
                                     className="clear-selection-button"
-                                    onClick={() => handleRegionClick(selectedRegion)}> {/* Cliccare lo stesso continente per tornare indietro */}
-                                    <strong>Annulla Selezione</strong>
+                                    onClick={() => handleRegionClick(selectedRegion)}> {/* Cliccare sulla X per resettare la selezione del continente*/}
+                                    <strong>Reset Continente Selezionato</strong>
                                 </button>
                             </>
                         )}
