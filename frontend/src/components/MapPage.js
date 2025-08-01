@@ -239,8 +239,6 @@ export default function MapPage() {
         }
     };
 
-// ... (tutto il codice precedente rimane invariato) ...
-
     const handleCountryClick = (countryCode) => {
         console.log(`Country clicked: ${countryCode}`);
 
@@ -254,8 +252,6 @@ export default function MapPage() {
             setSearchTerm('');
         }
     };
-
-// ... (il resto del tuo componente rimane invariato) ...
 
     const handleCityClick = (city) => {
         console.log(`City clicked: ${city.name}`);
@@ -292,16 +288,16 @@ export default function MapPage() {
 
         return {
             fillColor: continentConfig.color,
-            weight: continentId === selectedRegion ? 3 : 1, // Bordo più spesso se selezionato
+            weight: continentId === selectedRegion ? 3 : 1,  
             opacity: 1,
             color: continentConfig.color, // Bordo dello stesso colore del continente
-            fillOpacity: continentId === selectedRegion ? 0.7 : 0.2 // Opacità maggiore se selezionato, altrimenti minore
+            fillOpacity: continentId === selectedRegion ? 0.7 : 0.2  
         };
     };
 
     const onEachFeature = (feature, layer) => {
         const continentNameFromGeoJSON = feature.properties.CONTINENT;
-        console.log("Processing GeoJSON feature:", continentNameFromGeoJSON); // Log del nome continente dal GeoJSON
+        console.log("Processing GeoJSON feature:", continentNameFromGeoJSON);  
         const continentId = getContinentIdFromGeoJSONName(continentNameFromGeoJSON);
         const continentConfig = getContinentConfigById(continentId);
 
@@ -320,17 +316,17 @@ export default function MapPage() {
             mouseover: (e) => {
                 const currentLayer = e.target;
                 currentLayer.setStyle({
-                    weight: 4, // Bordo ben marcato
-                    color: continentConfig.color, // Colore del bordo basato sulla configurazione
-                    fillColor: continentConfig.color, // Riempimento con lo stesso colore
+                    weight: 4,  
+                    color: continentConfig.color, 
+                    fillColor: continentConfig.color,  
                     dashArray: '',
-                    fillOpacity: 0.4 // Opacità ridotta per l'hover
+                    fillOpacity: 0.4  
                 });
                 currentLayer.bringToFront();
             },
             mouseout: (e) => {
                 const currentLayer = e.target;
-                currentLayer.setStyle(getFeatureStyle(feature)); // Ripristina lo stile normale
+                currentLayer.setStyle(getFeatureStyle(feature));  
             }
         });
     };
@@ -343,8 +339,6 @@ export default function MapPage() {
                 </div>
                 <div className="city-subtitle">
                     Seleziona una regione dal mondo per iniziare a esplorare.
-      { /*              {currentView === 'countries' && `Esplora i paesi in ${getContinentConfigById(selectedRegion)?.name || 'questa regione'}.`}
-                    {currentView === 'cities' && `Esplora le città in ${COUNTRY_NAMES[selectedCountry] || 'questo paese'}.`} */}
                 </div>
             </div>
 
