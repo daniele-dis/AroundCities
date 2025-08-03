@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import citiesData from '../data/cities.json';
 import { COUNTRY_NAMES } from './MapPage';
-import '../css/CityPage.css'; // Assicurati di creare un file CSS per lo stile
+import '../css/CityPage.css'; 
 
 export default function CityPage() {
     const { countryCode } = useParams();
@@ -10,68 +10,82 @@ export default function CityPage() {
 
     const [filteredCities, setFilteredCities] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
 
-    // Prende il nome del paese dalla mappatura
     const countryName = COUNTRY_NAMES[countryCode] || countryCode;
 
-    // Effetto per filtrare le città all'avvio e quando la ricerca cambia
     useEffect(() => {
-        let citiesInCountry = citiesData.filter(city => city.country === countryCode);
+        setLoading(true);
+        const citiesInCountry = citiesData.filter(city => city.country === countryCode);
 
         if (searchTerm) {
-            citiesInCountry = citiesInCountry.filter(city => 
+            const results = citiesInCountry.filter(city => 
                 city.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
+            setFilteredCities(results);
+        } else {
+            setFilteredCities(citiesInCountry);
         }
-        setFilteredCities(citiesInCountry);
+        setLoading(false);
     }, [countryCode, searchTerm]);
 
     const handleCityClick = (city) => {
-        // Naviga alla pagina dei dettagli della città
         navigate(`/city/${encodeURIComponent(city.name.toLowerCase())}`, {
             state: { cityData: city }
         });
     };
 
-    const handleBackClick = () => {
-        // Torna alla pagina precedente (MapPage)
+    const handleBackClick = (event) => {
+        event.preventDefault();
         navigate(-1);
     };
 
     return (
         <div className="city-page-container">
-            <div className="city-page-header">
-                <button onClick={handleBackClick} className="back-button">
+            <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
+
+            {/* Inizia l'intestazione (header), che era mancante nel codice precedente */}
+            <header className="city-page-header">
+                <button onClick={handleBackClick} className="back-button" aria-label="Torna alla mappa">
                     ← Torna alla mappa
                 </button>
-                <h2 className="country-title">Città in {countryName}</h2>
+                <h1 className="country-title">Città in {countryName}</h1>
                 <input
                     type="text"
                     placeholder="Cerca città..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="city-search-input"
+                    aria-label="Cerca città"
                 />
-            </div>
-
-            <div className="cities-grid">
-                {filteredCities.length > 0 ? (
-                    filteredCities.map((city, index) => (
-                        <div
-                            key={index}
-                            className="city-card"
-                            onClick={() => handleCityClick(city)}
-                        >
-                            <h4>{city.name}</h4>
-                            <div className="city-info">
-                                <span className="city-region">{city.region}</span>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p className="no-results">Nessuna città trovata.</p>
-                )}
-            </div>
+            </header>
+            {/* Finisce l'intestazione */}
+            
+            <main>
+                <div className="cities-scroll-container">
+                    <section className="cities-grid">
+                        {loading ? (
+                            <p className="loading-message">Caricamento in corso...</p>
+                        ) : filteredCities.length > 0 ? (
+                            filteredCities.map((city, index) => (
+                                <div
+                                    key={index}
+                                    className="city-card"
+                                    onClick={() => handleCityClick(city)}
+                                    role="button"
+                                    tabIndex="0"
+                                    aria-label={`Dettagli della città di ${city.name}`}
+                                >
+                                    <h2 className="city-name">{city.name}</h2>
+                                    <p className="city-region">{city.region}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="no-results">Nessuna città trovata. Prova un'altra ricerca.</p>
+                        )}
+                    </section>
+                </div>
+            </main>
         </div>
     );
 }
