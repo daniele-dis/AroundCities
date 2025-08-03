@@ -241,16 +241,8 @@ export default function MapPage() {
 
     const handleCountryClick = (countryCode) => {
         console.log(`Country clicked: ${countryCode}`);
-
-        // Se il paese cliccato è l'Italia, naviga a una nuova pagina per le città italiane.
-        if (countryCode === 'IT') {
-            navigate(`/cities/${countryCode}`);
-        } else {
-            // Altrimenti, continua con la logica esistente di mostrare le città nel pannello laterale
-            setSelectedCountry(countryCode);
-            setCurrentView('cities');
-            setSearchTerm('');
-        }
+        // Naviga alla pagina CityPage per qualsiasi paese selezionato
+        navigate(`/cities/${countryCode}`);
     };
 
     const handleCityClick = (city) => {

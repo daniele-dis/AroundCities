@@ -275,7 +275,7 @@ body {
 }
 
 .clear-selection-button {
-  background-color: red; 
+  background-color: rgb(233, 10, 10); 
   border: 2px solid rgb(135, 0, 0);
   color: black;
   font-size: 600;

@@ -75,20 +75,22 @@ body {
     align-items: center;
     gap: 8px;
     padding: 10px 15px;
-    background-color: #f0f0f0;
-    color: #3A3A3A;
+    background-color: rgb(241, 229, 193);
+    color: black;
     text-decoration: none;
-    border: 1px solid var(--color-border-primary);
+    border: 2px solid rgb(77, 63, 0);
     border-radius: 8px;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.3s ease;
 }
 
 .back-button:hover {
-    background-color: #e0e0e0;
-    color: #000;
+    background-color: rgb(129, 116, 75); 
+    border: 2px solid rgb(77, 63, 0);
+    color: white;
+    font-weight: 600;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Stile per l'input di ricerca */
@@ -120,7 +122,7 @@ body {
 
 /* Card della singola città */
 .city-card {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: #e0f2f7;;
     border: 1px solid #b3e5fc; 
     border-radius: 12px;
     padding: 20px;
@@ -183,6 +185,22 @@ body {
     -webkit-overflow-scrolling: touch; 
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+}
+
+/* Stile per la scrollbar su WebKit (Chrome, Safari, Edge) */
+.cities-scroll-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.cities-scroll-container::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+.cities-scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px; 
+    border: 2px solid transparent; 
+    background-clip: padding-box; 
 }
 
 /* Modifica la griglia per adattarsi al suo contenitore */
