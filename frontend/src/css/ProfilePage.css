@@ -58,6 +58,7 @@
 }
 
 .city-list li {
+  justify-content: left;
   padding: 1.25rem 1.5rem;
   border-radius: 8px;
   margin-bottom: 1rem ;
@@ -71,6 +72,12 @@
   gap: 15px;
   color: black;
   font-weight: 400;
+  position:relative;
+  overflow:hidden;
+}
+
+.city-list li span {
+ flex-grow: 1; /* Allows the city name to take up available space */
 }
 
 .city-list li:hover {
@@ -123,6 +130,24 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.remove-city-button {
+  position:absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent; 
+  color: #ff4d4d; 
+  border: none; 
+  font-size: 1.1rem; 
+  cursor: pointer; 
+  transition: color 0.2s ease-in-out; 
+  margin-left: 10px; 
+  line-height: 1; 
+}
+
+.remove-city-button:hover {
+  color: #e60000;
+}
 
 /* Animazione di fade-in */
 @keyframes fadeIn {
