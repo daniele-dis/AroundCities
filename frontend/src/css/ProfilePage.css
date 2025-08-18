@@ -1,0 +1,141 @@
+/* Container principale con sfondo sfumato */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* Stile per l'header del profilo */
+.profile-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #0277bd;
+}
+
+.profile-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.profile-header p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+.city-count {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #6A994E;
+}
+
+/* Stile per la sezione principale */
+.profile-main {
+  width: 100%;
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Lista delle città con un tocco moderno */
+.city-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.city-list li {
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem ;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: black;
+  font-weight: 400;
+}
+
+.city-list li:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.city-list li::before {
+  content: '📍';
+  font-size: 1.2rem;
+  color: #6A994E;
+}
+
+/* Messaggio per nessuna città */
+.no-cities-message {
+  text-align: center;
+  color: rgba(240, 242, 245, 0.6);
+  font-style: italic;
+  font-size: 1rem;
+  margin-top: 2rem;
+}
+
+.back-button{
+  position: absolute; 
+  top: 3rem; 
+  left: 3rem; 
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background-color: rgb(241, 229, 193);
+  color: black;
+  text-decoration: none;
+  border: 2px solid rgb(77, 63, 0);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.back-button {
+
+}
+
+.back-button:hover {
+    background-color: rgb(129, 116, 75); 
+    border: 2px solid rgb(77, 63, 0);
+    color: white;
+    font-weight: 600;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Animazione di fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

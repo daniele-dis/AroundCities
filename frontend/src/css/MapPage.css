@@ -324,6 +324,33 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
+/* Stile per il pulsante del profilo */
+.profile-button {
+  position: absolute; 
+  top: 20px;
+  right: 20px;
+  background-color: rgb(241, 229, 193);; 
+  color: white;
+  border: none;
+  border-radius: 50%; 
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 1000; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-button:hover {
+  background-color: #777;
+}
+
+.profile-button-icon {
+    color: #0277bd;
+}
 
 
 /* Animazione */

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./components/LoginPage";
 import MapPage from "./components/MapPage";
 import CityPage from "./components/CityPage";
+import CityDetailPage from "./components/CityDetailPage";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -12,17 +14,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage onLogin={setUser} />} />
         <Route path="/map" element={user ? <MapPage /> : <Navigate to="/login" replace />} />
-        {/*
-          Importante: la rotta per la pagina delle città deve essere definita qui,
-          prima della rotta catch-all "*", altrimenti non funzionerà.
-        */}
         <Route path="/cities/:countryCode" element={user ? <CityPage /> : <Navigate to="/login" replace />} />
-        
-        {/*
-          Questa rotta generica reindirizza l'utente a "/map" o "/login"
-          per qualsiasi altro URL non specificato.
-        */}
+        <Route path="/city/:cityName" element={<CityDetailPage />} />
         <Route path="*" element={<Navigate to={user ? "/map" : "/login"} replace />} />
+                <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

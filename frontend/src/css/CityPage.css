@@ -1,4 +1,4 @@
-/* Importa le variabili e gli stili di base da MapPage.css per coerenza */
+
 :root {
     --color-background-secondary: #f0f0f0;
     --color-border-primary: #ccc;
@@ -122,7 +122,7 @@ body {
 
 /* Card della singola città */
 .city-card {
-    background-color: #e0f2f7;;
+    background-color: #e0f2f7; 
     border: 1px solid #b3e5fc; 
     border-radius: 12px;
     padding: 20px;

@@ -6,7 +6,7 @@ import L from 'leaflet';
 import '../css/MapPage.css';
 import '../css/LoginPage.css';
 import citiesData from '../data/cities.json';
-import worldContinentsGeoJSON from '../data/continents.json'; // Questo è il tuo file continents.json
+import worldContinentsGeoJSON from '../data/continents.json'; 
 
 // Correggi l'icona di default di Leaflet che potrebbe non caricarsi correttamente
 delete L.Icon.Default.prototype._getIconUrl;
@@ -75,15 +75,15 @@ const CONTINENTS = {
     EUROPE: {
         id: 'europe',
         name: 'Europe',
-        emoji: '🇪🇺',
+        emoji: '🌎', 
         color: '#6A994E',
         countries: ['AD', 'AL', 'AT', 'BE', 'BA', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'XK', 'LV', 'LI', 'LT', 'LU', 'MT', 'MD', 'MC', 'ME', 'NL', 'MK', 'NO', 'PL', 'PT', 'RO', 'SM', 'RS', 'SK', 'SI', 'ES', 'SE', 'CH', 'UA', 'GB', 'VA']
     },
     AMERICA: { // Nuovo continente America
         id: 'america',
         name: 'America',
-        emoji: '🌎', // Puoi scegliere un'emoji che rappresenti l'intero continente
-        color: '#4F6D7A', // Colore per l'America
+        emoji: '🌎', 
+        color: '#4F6D7A', 
         countries: [
             // Paesi del Nord America
             'US', 'CA', 'MX', 'BZ', 'CR', 'SV', 'GT', 'HN', 'NI', 'PA', 'CU', 'DO', 'HT', 'JM', 'BS', 'BB', 'GD', 'KN', 'LC', 'VC', 'TT',
@@ -108,30 +108,30 @@ const CONTINENTS = {
     OCEANIA: {
         id: 'oceania',
         name: 'Australia',
-        emoji: '🇦🇺',
+        emoji: '🌎', 
         color: '#5C7C7B',
         countries: ['AU', 'NZ', 'FJ', 'PG', 'SB', 'VU', 'NC', 'PF', 'WS', 'TO', 'TV', 'KI', 'FM', 'MH', 'NR', 'PW']
     },
     ANTARCTICA: {
         id: 'antarctica',
         name: 'Antarctica',
-        emoji: '🇦🇶',
+        emoji: '🌍',
         color: '#A0A0A0',
         countries: []
     }
 };
 
 export default function MapPage() {
-    const [selectedRegion, setSelectedRegion] = useState(null); // ID del continente selezionato
-    const [selectedCountry, setSelectedCountry] = useState(null); // Codice del paese selezionato
-    const [currentView, setCurrentView] = useState('continents'); // 'continents', 'countries', 'cities'
+    const [selectedRegion, setSelectedRegion] = useState(null); 
+    const [selectedCountry, setSelectedCountry] = useState(null); 
+    const [currentView, setCurrentView] = useState('continents'); 
     const [loggedInUser, setLoggedInUser] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]); // Nuovo stato per i paesi filtrati
+    const [filteredCountries, setFilteredCountries] = useState([]); 
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
-    const continentLayers = useRef({}); // Mappa per tenere traccia dei layer Leaflet per ID del continente
+    const continentLayers = useRef({}); 
 
     useEffect(() => {
         const user = localStorage.getItem('loggedInUser');
@@ -141,11 +141,9 @@ export default function MapPage() {
     // Helper function to get continent ID from GeoJSON continent name
     const getContinentIdFromGeoJSONName = (geoJSONContinentName) => {
         const lowerCaseName = geoJSONContinentName.toLowerCase();
-        // Mappa i nomi specifici del GeoJSON ('north america', 'south america', 'america') al nostro ID unificato 'america'
-        if (lowerCaseName.includes('america')) { // Più generico per catturare qualsiasi variazione
+        if (lowerCaseName.includes('america')) { 
             return 'america';
         }
-        // Per gli altri continenti, trova in base al nome configurato
         const foundContinent = Object.values(CONTINENTS).find(c => c.name.toLowerCase() === lowerCaseName);
         if (!foundContinent) {
             console.warn(`Mismatch: GeoJSON continent name "${geoJSONContinentName}" not found in CONTINENTS config.`);
@@ -173,34 +171,32 @@ export default function MapPage() {
                 ? citiesInSelectedCountry.filter(city => city.name.toLowerCase().includes(searchTerm.toLowerCase()))
                 : citiesInSelectedCountry;
             setFilteredCities(newFilteredCities);
-            console.log("Filtered Cities count:", newFilteredCities.length); // Log della variabile locale
+            console.log("Filtered Cities count:", newFilteredCities.length); 
         } else if (currentView === 'countries' && selectedRegion) {
             const continentConfig = getContinentConfigById(selectedRegion);
             if (continentConfig) {
                 const countriesInContinent = continentConfig.countries.map(code => ({
                     code: code,
-                    name: COUNTRY_NAMES[code] || `Paese Sconosciuto (${code})` // Usa la mappatura
+                    name: COUNTRY_NAMES[code] || `Paese Sconosciuto (${code})`
                 }));
                 const newFilteredCountries = searchTerm
                     ? countriesInContinent.filter(country => country.name.toLowerCase().includes(searchTerm.toLowerCase()))
                     : countriesInContinent;
                 setFilteredCountries(newFilteredCountries);
-                console.log("Filtered Countries count:", newFilteredCountries.length); // Log della variabile locale
+                console.log("Filtered Countries count:", newFilteredCountries.length); 
             } else {
                 setFilteredCountries([]);
                 console.log("Filtered Countries count: 0 (no continent config)");
             }
         } else {
-            // Se non c'è una regione selezionata o siamo nella vista continenti
             setFilteredCities([]);
             setFilteredCountries([]);
             console.log("Filtered Cities count: 0, Filtered Countries count: 0 (initial/continents view)");
         }
-    }, [currentView, selectedRegion, selectedCountry, searchTerm]); // Rimosso citiesData come dipendenza
+    }, [currentView, selectedRegion, selectedCountry, searchTerm]);
 
     const handleRegionClick = (regionId) => {
         console.log(`Region clicked: ${regionId}, currentView: ${currentView}`);
-        // Ripristina lo stile del continente precedentemente selezionato
         if (selectedRegion && continentLayers.current[selectedRegion]) {
             const prevLayer = continentLayers.current[selectedRegion];
             const prevFeature = worldContinentsGeoJSON.features.find(
@@ -211,22 +207,18 @@ export default function MapPage() {
             }
         }
 
-        // Logica per cambiare vista o deselezionare
         if (selectedRegion === regionId && currentView === 'countries') {
-            // Se clicco sullo stesso continente e sono già nella vista paesi, torno alla vista continenti
             setSelectedRegion(null);
             setSelectedCountry(null);
             setCurrentView('continents');
             setSearchTerm('');
         } else {
-            // Se clicco su un nuovo continente o sono nella vista continenti, vado alla vista paesi
             setSelectedRegion(regionId);
-            setSelectedCountry(null); // Resetta il paese selezionato
+            setSelectedCountry(null); 
             setCurrentView('countries');
-            setSearchTerm(''); // Resetta il termine di ricerca
+            setSearchTerm(''); 
         }
 
-        // Applica lo stile di selezione al layer appena cliccato (se presente)
         if (regionId && continentLayers.current[regionId]) {
             const currentLayer = continentLayers.current[regionId];
             const currentFeature = worldContinentsGeoJSON.features.find(
@@ -234,14 +226,13 @@ export default function MapPage() {
             );
             if (currentFeature) {
                 currentLayer.setStyle(getFeatureStyle(currentFeature));
-                currentLayer.bringToFront(); // Porta in primo piano il continente selezionato
+                currentLayer.bringToFront(); 
             }
         }
     };
 
     const handleCountryClick = (countryCode) => {
         console.log(`Country clicked: ${countryCode}`);
-        // Naviga alla pagina CityPage per qualsiasi paese selezionato
         navigate(`/cities/${countryCode}`);
     };
 
@@ -263,7 +254,6 @@ export default function MapPage() {
         const continentId = getContinentIdFromGeoJSONName(continentNameFromGeoJSON);
         const continentConfig = getContinentConfigById(continentId);
 
-        // Log per debugging del colore
         console.log(`Styling feature for GeoJSON continent "${continentNameFromGeoJSON}" (mapped to ID: "${continentId}") with color: ${continentConfig?.color || '#ccc'}`);
 
 
@@ -282,7 +272,7 @@ export default function MapPage() {
             fillColor: continentConfig.color,
             weight: continentId === selectedRegion ? 3 : 1,  
             opacity: 1,
-            color: continentConfig.color, // Bordo dello stesso colore del continente
+            color: continentConfig.color, 
             fillOpacity: continentId === selectedRegion ? 0.7 : 0.2  
         };
     };
@@ -298,8 +288,6 @@ export default function MapPage() {
             return;
         }
 
-        // Memorizza il riferimento al layer Leaflet per poterlo manipolare in seguito
-        // Importante: per l'America, tutti i layer (Nord e Sud) devono puntare allo stesso ID 'america'
         continentLayers.current[continentId] = layer;
 
 
@@ -332,6 +320,22 @@ export default function MapPage() {
                 <div className="city-subtitle">
                     Seleziona una regione dal mondo per iniziare a esplorare.
                 </div>
+
+            {/* pulsante profilo */}
+            <button
+            className="profile-button"
+            onClick={() => navigate('/profile')}
+            >
+            <svg 
+                className="profile-button-icon" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+            >
+                <path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/>
+            </svg>
+            </button>
+            
             </div>
 
             <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
@@ -360,7 +364,6 @@ export default function MapPage() {
                 </div>
 
                 <div className="regions-sidebar">
-                    {/* Sidebar sempre visibile per i continenti */}
                     {Object.values(CONTINENTS).map(region => (
                         <button
                             key={region.id}
@@ -375,7 +378,6 @@ export default function MapPage() {
                 </div>
             </div>
 
-            {/* Pannello Dettagli Dinamico */}
             {selectedRegion && (
                 <div className="region-details">
                     <div className="region-header">
@@ -389,16 +391,14 @@ export default function MapPage() {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="country-search-input"
                                 />
-                                {/* Pulsante per Resettare il testo nel form di input*/}
                                 <button
                                     className="clear-country-button"
                                     onClick={() => setSearchTerm('')}> 
                                     <strong>Reset Ricerca Paese</strong>
                                 </button>
-
                                 <button
                                     className="clear-selection-button"
-                                    onClick={() => handleRegionClick(selectedRegion)}> {/* Cliccare sulla X per resettare la selezione del continente*/}
+                                    onClick={() => handleRegionClick(selectedRegion)}> 
                                     <strong>Reset Continente Selezionato</strong>
                                 </button>
                             </>
@@ -415,7 +415,7 @@ export default function MapPage() {
                                 />
                                 <button
                                     className="clear-selection-button"
-                                    onClick={() => handleCountryClick(selectedCountry)}> {/* Cliccare lo stesso paese per tornare indietro */}
+                                    onClick={() => handleCountryClick(selectedCountry)}> 
                                     Annulla Selezione Paese
                                 </button>
                             </>
@@ -423,7 +423,7 @@ export default function MapPage() {
                     </div>
 
                     {currentView === 'countries' && filteredCountries.length > 0 ? (
-                        <div className="countries-grid"> {/* Nuova griglia per i paesi */}
+                        <div className="countries-grid"> 
                             {filteredCountries.map((country) => (
                                 <div
                                     key={country.code}
