@@ -25,7 +25,7 @@ export default function ProfilePage() {
     <div className="profile-container">
     <img src={require('../img/map.jpg')} alt="Map Background" className="map-background" />
 
-      <button onClick={() => navigate(-1)} className="back-button">
+      <button onClick={() => navigate(-1)} className="back-button-profile">
         ← Torna alla Mappa
       </button>
       <header className="profile-header">
