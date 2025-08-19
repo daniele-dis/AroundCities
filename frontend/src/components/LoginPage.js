@@ -6,15 +6,18 @@ import '../css/LoginPage.css';
 export default function LoginPage({ onLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState(""); // Useremo questo solo per la registrazione nel frontend
+    const [username, setUsername] = useState(""); // Useremo questo per la registrazione
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [showInfo, setShowInfo] = useState(false); // Mantengo gli stati originali
+    const [showInfo, setShowInfo] = useState(false);
     const navigate = useNavigate();
+
+    // URL di base per il tuo backend Flask
+    const API_BASE_URL = "http://localhost:5025";
 
     const resetForm = () => {
         setEmail("");
@@ -33,48 +36,44 @@ export default function LoginPage({ onLogin }) {
 
         try {
             if (isRegistering) {
-                // Logica di registrazione: ora invia al backend Node.js
                 if (password !== confirmPassword) {
                     setError("Le password non corrispondono.");
                     setLoading(false);
                     return;
                 }
-                // Il tuo backend richiede solo email e password per la registrazione.
-                // Il campo username nel form è presente, ma non viene inviato al backend.
-                // Se vuoi salvare l'username, devi modificare server.js e la tabella 'users'.
-                if (!email || !password) {
-                    setError("Per favore, inserisci sia l'email che la password.");
+                if (!email || !password || !username) { // Aggiunto username come campo obbligatorio per la registrazione
+                    setError("Per favore, inserisci email, password e nome utente.");
                     setLoading(false);
                     return;
                 }
 
-                const response = await fetch('http://localhost:5000/register', {
+                const response = await fetch(`${API_BASE_URL}/register`, { // Modificato URL a 5025
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, password }), // Inviamo solo email e password al backend
+                    // Il backend Flask richiede email, password e name per la registrazione
+                    body: JSON.stringify({ email, password, name: username }), 
                 });
 
-                const data = await response.json(); // Il backend risponde con JSON
+                const data = await response.json();
 
                 if (response.ok) {
                     setSuccessMessage(data.message || "Registrazione avvenuta con successo! Ora puoi accedere.");
                     setIsRegistering(false); // Torna alla modalità login
                     resetForm(); // Pulisci il form
                 } else {
-                    setError(data.message || "Errore durante la registrazione. Riprova.");
+                    setError(data.error || "Errore durante la registrazione. Riprova.");
                 }
 
             } else {
-                // Logica di login: ora invia al backend Node.js
                 if (!email || !password) {
-                    setError("Per favor, inserisci email e password.");
+                    setError("Per favore, inserisci email e password.");
                     setLoading(false);
                     return;
                 }
                 
-                const response = await fetch('http://localhost:5000/login', {
+                const response = await fetch(`${API_BASE_URL}/login`, { // Modificato URL a 5025
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,19 +81,18 @@ export default function LoginPage({ onLogin }) {
                     body: JSON.stringify({ email, password }),
                 });
 
-                const data = await response.json(); // Il backend risponde con JSON
+                const data = await response.json();
 
                 if (response.ok) {
-                    // Login avvenuto con successo, salva userId e userEmail nel localStorage
-                    // per mantenere lo stato di autenticazione nel frontend.
-                    localStorage.setItem('userId', data.userId);
-                    localStorage.setItem('userEmail', data.email); // Assicurati che il backend restituisca l'email nel login
+                    // Il backend Flask restituisce l'utente in data.user
+                    localStorage.setItem('userId', data.user.id);
+                    localStorage.setItem('userEmail', data.user.email); 
                     
                     setSuccessMessage(data.message || "Accesso avvenuto con successo!");
-                    onLogin(data.userId, data.email); // Chiamiamo la prop onLogin per aggiornare lo stato di autenticazione nell'App.js
+                    onLogin(data.user.id, data.user.email); // Passiamo userId e email
                     navigate('/map'); // Reindirizza l'utente alla pagina della mappa
                 } else {
-                    setError(data.message || "Credenziali non valide. Controlla email e password.");
+                    setError(data.error || "Credenziali non valide. Controlla email e password.");
                 }
             }
         } catch (err) {
@@ -194,7 +192,6 @@ export default function LoginPage({ onLogin }) {
                             />
                             <span>Mostra Password</span>
                         </div>
-
 
                         {error && <p className="error-message">{error}</p>}
                         {successMessage && <p className="success-message">{successMessage}</p>}
