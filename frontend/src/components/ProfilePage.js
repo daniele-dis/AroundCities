@@ -82,6 +82,7 @@ useEffect(() => {
         
       </header>
       <main className="profile-main">
+        <p className="city-subtitle">Clicca Sulle Città Per Vedere Cosa Hai Già Visitato e Modificarlo Se Vuoi.</p>
         {visitedCities.length > 0 ? (
           <ul className="city-list">
             {visitedCities.map((city, index) => (

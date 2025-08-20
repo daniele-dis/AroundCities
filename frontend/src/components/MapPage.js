@@ -75,50 +75,49 @@ const CONTINENTS = {
     EUROPE: {
         id: 'europe',
         name: 'Europe',
-        emoji: '🌎', 
+        emoji: '🌍', // Europa + Africa
         color: '#6A994E',
         countries: ['AD', 'AL', 'AT', 'BE', 'BA', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'XK', 'LV', 'LI', 'LT', 'LU', 'MT', 'MD', 'MC', 'ME', 'NL', 'MK', 'NO', 'PL', 'PT', 'RO', 'SM', 'RS', 'SK', 'SI', 'ES', 'SE', 'CH', 'UA', 'GB', 'VA']
     },
-    AMERICA: { // Nuovo continente America
+    AMERICA: {
         id: 'america',
         name: 'America',
-        emoji: '🌎', 
+        emoji: '🌎', // Americhe
         color: '#4F6D7A', 
         countries: [
-            // Paesi del Nord America
             'US', 'CA', 'MX', 'BZ', 'CR', 'SV', 'GT', 'HN', 'NI', 'PA', 'CU', 'DO', 'HT', 'JM', 'BS', 'BB', 'GD', 'KN', 'LC', 'VC', 'TT',
-            // Paesi del Sud America
             'AR', 'BO', 'BR', 'CL', 'CO', 'EC', 'FK', 'GF', 'GY', 'PY', 'PE', 'SR', 'UY', 'VE'
         ]
     },
     ASIA: {
         id: 'asia',
         name: 'Asia',
-        emoji: '🌏',
+        emoji: '🌏', // Asia
         color: '#8C5252',
         countries: ['AF', 'AM', 'AZ', 'BH', 'BD', 'BT', 'BN', 'KH', 'CN', 'GE', 'IN', 'ID', 'IR', 'IQ', 'IL', 'JP', 'JO', 'KZ', 'KW', 'KG', 'LA', 'LB', 'MY', 'MV', 'MN', 'MM', 'NP', 'KP', 'OM', 'PK', 'PH', 'QA', 'SA', 'SG', 'KR', 'LK', 'SY', 'TW', 'TJ', 'TH', 'TR', 'TM', 'AE', 'UZ', 'VN', 'YE']
     },
     AFRICA: {
         id: 'africa',
         name: 'Africa',
-        emoji: '🌍',
+        emoji: '🌍', // Europa + Africa
         color: '#B08E3B',
         countries: ['DZ', 'AO', 'BJ', 'BW', 'BF', 'BI', 'CV', 'CM', 'CF', 'TD', 'KM', 'CG', 'CD', 'DJ', 'EG', 'GQ', 'ER', 'SZ', 'ET', 'GA', 'GM', 'GH', 'GN', 'GW', 'CI', 'KE', 'LS', 'LR', 'LY', 'MG', 'MW', 'ML', 'MR', 'MU', 'MA', 'MZ', 'NA', 'NE', 'NG', 'RW', 'ST', 'SN', 'SC', 'SL', 'SO', 'ZA', 'SS', 'SD', 'TZ', 'TG', 'TN', 'UG', 'ZM', 'ZW']
     },
     OCEANIA: {
         id: 'oceania',
         name: 'Australia',
-        emoji: '🌎', 
+        emoji: '🌏', // Asia + Oceania
         color: '#5C7C7B',
         countries: ['AU', 'NZ', 'FJ', 'PG', 'SB', 'VU', 'NC', 'PF', 'WS', 'TO', 'TV', 'KI', 'FM', 'MH', 'NR', 'PW']
     },
     ANTARCTICA: {
         id: 'antarctica',
         name: 'Antarctica',
-        emoji: '🌍',
+        emoji: '❄️', // meglio fiocco di neve per rappresentare il Polo Sud
         color: '#A0A0A0',
         countries: []
     }
+
 };
 
 export default function MapPage() {
@@ -130,6 +129,8 @@ export default function MapPage() {
     const [filteredCountries, setFilteredCountries] = useState([]); 
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+
+    const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
     const continentLayers = useRef({}); 
 
@@ -324,7 +325,7 @@ export default function MapPage() {
             {/* pulsante profilo */}
             <button
             className="profile-button"
-            onClick={() => navigate('/profile')}
+            onClick={() => setProfileMenuOpen(!profileMenuOpen)}
             >
             <svg 
                 className="profile-button-icon" 
@@ -377,6 +378,16 @@ export default function MapPage() {
                     ))}
                 </div>
             </div>
+            
+            {profileMenuOpen && (
+            <div className="profile-menu">
+                <button onClick={() => navigate('/profile')}>Profilo</button>
+                <button onClick={() => {
+                localStorage.removeItem('loggedInUser');
+                navigate('/login');
+                }}>Logout</button>
+            </div>
+            )}
 
             {selectedRegion && (
                 <div className="region-details">

@@ -54,6 +54,13 @@
   animation: fadeIn 1s ease-in-out;
 }
 
+.profile-main p{
+font-size: 0.9rem;
+font-weight: 500;
+margin-top:-20px;
+margin-bottom:20px;
+}
+
 /* Lista delle città con un tocco moderno */
 .city-list {
   list-style: none;

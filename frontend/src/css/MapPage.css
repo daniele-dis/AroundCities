@@ -352,6 +352,68 @@ body {
     color: #0277bd;
 }
 
+.profile-menu {
+  position: absolute;
+  top: 60px; 
+  right: 60px; 
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  min-width: 150px;
+
+  /* effetto comparsa */
+  opacity: 0;
+  transform: scale(0.9) translateY(-8px);
+  transform-origin: top right;
+  animation: profileMenuPop 0.25s ease forwards;
+}
+
+/* freccetta (nuvoletta) */
+.profile-menu::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+  filter: drop-shadow(0 -1px 1px rgba(0,0,0,0.15)); /* piccola ombra */
+}
+
+@keyframes profileMenuPop {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.profile-menu button {
+  background: none;
+  border: none;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-menu button:hover {
+  background: #f0f4f7;
+  color: #0277bd;
+  padding-left: 1.3rem; /* leggero slide */
+}
+
+.profile-menu button + button {
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
 
 /* Animazione */
 @keyframes fadeInScale {

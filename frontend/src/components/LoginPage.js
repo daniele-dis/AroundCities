@@ -87,7 +87,7 @@ export default function LoginPage({ onLogin }) {
                     // Il backend Flask restituisce l'utente in data.user
                     localStorage.setItem('userId', data.user.id);
                     localStorage.setItem('userEmail', data.user.email); 
-                    
+                    localStorage.setItem('loggedInUser', data.user.name);
                     setSuccessMessage(data.message || "Accesso avvenuto con successo!");
                     onLogin(data.user.id, data.user.email); // Passiamo userId e email
                     navigate('/map'); // Reindirizza l'utente alla pagina della mappa
@@ -128,8 +128,8 @@ export default function LoginPage({ onLogin }) {
                     <div className="info-modal" onClick={e => e.stopPropagation()}>
                         <h3>Come funziona Around Cities?</h3>
                         <p>
-                            Around Cities ti permette di scoprire, condividere e vivere le storie delle città.<br />
-                            Registrati, accedi e inizia a esplorare le mappe, aggiungere i tuoi luoghi preferiti e interagire con altri utenti!
+                            Around Cities ti tener traccia delle città che hai visitato e dei loro punti di interesse.<br />
+                            Registrati, accedi e inizia a esplorare le mappe, aggiungere i tuoi luoghi preferiti per tenerli sempre con te!
                         </p>
                         <button className="auth-button" onClick={() => setShowInfo(false)}>Chiudi</button>
                     </div>
