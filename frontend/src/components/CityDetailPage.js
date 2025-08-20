@@ -180,6 +180,7 @@ export default function CityDetailPage() {
       </header>
 
       <main className="city-sections">
+        
         {/* CARD Hotel & B&B */}
         <div className="city-card-combined">
           <h2>🏨 Hotel & B&B</h2>

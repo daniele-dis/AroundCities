@@ -7,25 +7,31 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const location = useLocation(); 
   const userId = localStorage.getItem('userId'); // Usa l'ID utente dal localStorage per la sicurezza
+  const [loggedInUser, setLoggedInUser] = useState('');
   const API_BASE_URL = "http://localhost:5025"; 
 
   // Utilizziamo location.key come dipendenza per forzare il ricaricamento
-  useEffect(() => {
+useEffect(() => {
     if (!userId) {
-      navigate('/login');
-      return;
+        navigate('/login');
+        return; 
     }
+    const user = localStorage.getItem('loggedInUser');
+    if (user) {
+        setLoggedInUser(user);
+    }
+    
     const fetchUserCities = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/user_cities/${userId}`);
-        const data = await response.json();
-        setVisitedCities(data.visited_cities);
-      } catch (error) {
-        console.error("Errore nel recupero delle città dell'utente:", error);
-      }
+        try {
+            const response = await fetch(`${API_BASE_URL}/user_cities/${userId}`);
+            const data = await response.json();
+            setVisitedCities(data.visited_cities);
+        } catch (error) {
+            console.error("Errore nel recupero delle città dell'utente:", error);
+        }
     };
     fetchUserCities();
-  }, [userId, location.key, navigate]); 
+}, [userId, location.key, navigate]);
 
   // FUNZIONE DI NAVIGAZIONE CORRETTA
   const handleCityClick = (cityName) => {
@@ -67,8 +73,13 @@ export default function ProfilePage() {
         ← Torna alla Mappa
       </button>
       <header className="profile-header">
-        <h1>Il Mio Profilo</h1>
-        <p>Città visitate: <span className="city-count">{visitedCities.length}</span></p>
+
+        <div class ="div-username">
+        <h1>{loggedInUser?.endsWith('a') ? 'a' : ''} {loggedInUser},
+        Città Visitate: <span className="city-count">{visitedCities.length}</span></h1>
+        </div>
+
+        
       </header>
       <main className="profile-main">
         {visitedCities.length > 0 ? (

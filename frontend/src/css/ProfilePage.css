@@ -18,31 +18,35 @@
 }
 
 .profile-header h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: "DM Serif Text", serif;
+    font-size: 2.8em;
+    color: #0277bd;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 30px;
 }
 
 .profile-header p {
   font-size: 1.2rem;
-  font-weight: 300;
+  font-weight: 600;
   opacity: 0.8;
+  margin-top: -10px;
+  margin-bottom: 5px;
 }
 
 .city-count {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2.3rem;
+  font-weight: 600;
   color: #6A994E;
 }
 
 /* Stile per la sezione principale */
 .profile-main {
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   background: rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  border-radius: 16px;
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   padding: 2.5rem;
@@ -54,14 +58,16 @@
 .city-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 15px 15px;     /* centra */
+  max-width: 750px;   /* 👈 restringe la larghezza */
+  width: 100%;        /* resta responsive */
 }
 
 .city-list li {
   justify-content: left;
   padding: 1.25rem 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 1rem ;
+  border-radius: 16px;
+  margin-bottom: 1.5rem ;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   background-color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
@@ -69,7 +75,7 @@
   font-size: 1.1rem;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   color: black;
   font-weight: 400;
   position:relative;
@@ -78,6 +84,8 @@
 
 .city-list li span {
  flex-grow: 1; /* Allows the city name to take up available space */
+   font-weight: 500;
+   font-size: 1.2rem;
 }
 
 .city-list li:hover {
@@ -88,7 +96,7 @@
 
 .city-list li::before {
   content: '📍';
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #6A994E;
 }
 
@@ -131,22 +139,35 @@
 }
 
 .remove-city-button {
-  position:absolute;
+  position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   background-color: transparent; 
   color: #ff4d4d; 
-  border: none; 
+  border: 1px solid rgb(255, 0, 0);
   font-size: 1.1rem; 
   cursor: pointer; 
   transition: color 0.2s ease-in-out; 
   margin-left: 10px; 
   line-height: 1; 
+  padding: 4px 8px;   /* 👈 spazio interno */
+  border-radius: 8px; 
 }
 
 .remove-city-button:hover {
   color: #e60000;
+}
+
+.div-username{
+  background: rgba(255, 255, 255, 0.5);
+  width: 700px;
+  height: 100px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease-in-out;
+  text-align: center;        /* centra orizzontalmente */
+  line-height: 100px;        /* trucco per centrare verticalmente */
 }
 
 /* Animazione di fade-in */
