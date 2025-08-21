@@ -128,7 +128,7 @@ export default function LoginPage({ onLogin }) {
                     <div className="info-modal" onClick={e => e.stopPropagation()}>
                         <h3>Come funziona Around Cities?</h3>
                         <p>
-                            Around Cities ti tener traccia delle città che hai visitato e dei loro punti di interesse.<br />
+                            Around Cities ti permette di tener traccia delle città che hai visitato e dei loro punti di interesse.<br />
                             Registrati, accedi e inizia a esplorare le mappe, aggiungere i tuoi luoghi preferiti per tenerli sempre con te!
                         </p>
                         <button className="auth-button" onClick={() => setShowInfo(false)}>Chiudi</button>
