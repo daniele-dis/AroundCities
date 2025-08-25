@@ -10,6 +10,7 @@ export default function ProfilePage() {
   const [loggedInUser, setLoggedInUser] = useState('');
   const API_BASE_URL = "http://localhost:5025"; 
 
+
   // Utilizziamo location.key come dipendenza per forzare il ricaricamento
 useEffect(() => {
     if (!userId) {
@@ -75,8 +76,10 @@ useEffect(() => {
       <header className="profile-header">
 
         <div class ="div-username">
-        <h1>{loggedInUser?.endsWith('a') ? 'a' : ''} {loggedInUser},
-        Città Visitate: <span className="city-count">{visitedCities.length}</span></h1>
+          <h1>
+            {loggedInUser},
+            Città Visitate: <span className="city-count">{visitedCities.length}</span>
+          </h1>
         </div>
 
         

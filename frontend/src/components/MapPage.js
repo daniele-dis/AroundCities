@@ -72,10 +72,10 @@ export const COUNTRY_NAMES = {
 
 // Configurazione completa dei continenti con codici paese
 const CONTINENTS = {
-    EUROPE: {
-        id: 'europe',
-        name: 'Europe',
-        emoji: '🌍', // Europa + Africa
+    EUROPA: {
+        id: 'europa',
+        name: 'Europa',
+        emoji: '🌍', 
         color: '#6A994E',
         countries: ['AD', 'AL', 'AT', 'BE', 'BA', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'XK', 'LV', 'LI', 'LT', 'LU', 'MT', 'MD', 'MC', 'ME', 'NL', 'MK', 'NO', 'PL', 'PT', 'RO', 'SM', 'RS', 'SK', 'SI', 'ES', 'SE', 'CH', 'UA', 'GB', 'VA']
     },
@@ -134,6 +134,9 @@ export default function MapPage() {
 
     const continentLayers = useRef({}); 
 
+    // Lista di username che non devono avere la 'a' finale
+    const usernamesNoSuffix = ['CiroLaRocca'];
+
     useEffect(() => {
         const user = localStorage.getItem('loggedInUser');
         if (user) setLoggedInUser(user);
@@ -142,9 +145,15 @@ export default function MapPage() {
     // Helper function to get continent ID from GeoJSON continent name
     const getContinentIdFromGeoJSONName = (geoJSONContinentName) => {
         const lowerCaseName = geoJSONContinentName.toLowerCase();
+
         if (lowerCaseName.includes('america')) { 
             return 'america';
         }
+
+        if (lowerCaseName.includes('europe')) {
+        return 'europa';
+        }
+
         const foundContinent = Object.values(CONTINENTS).find(c => c.name.toLowerCase() === lowerCaseName);
         if (!foundContinent) {
             console.warn(`Mismatch: GeoJSON continent name "${geoJSONContinentName}" not found in CONTINENTS config.`);
@@ -316,7 +325,7 @@ export default function MapPage() {
         <div className="map-page-container">
             <div className="welcome-box">
                 <div className="city-glow-title-map">
-                    Benvenuto{loggedInUser?.endsWith('a') ? 'a' : ''}, {loggedInUser}
+                    Benvenuto{usernamesNoSuffix.includes(loggedInUser) || !loggedInUser?.endsWith('a') ? '' : 'a'}, {loggedInUser}
                 </div>
                 <div className="city-subtitle">
                     Seleziona una regione dal mondo per iniziare a esplorare.
